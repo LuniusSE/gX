@@ -9,6 +9,8 @@
 /** Lua Includes **/
 #include <lua.hpp>
 
+/** Other Thirdparty Includes **/
+
 /** Standard Includes **/
 #include <string>
 
@@ -159,7 +161,6 @@ public:
         __Destroy();
     }
 
-
 };
 
 /** OpenGL Message Callback **/
@@ -259,6 +260,9 @@ int main()
         #version 440 core
 
         layout (location = 0) in vec3 Position;
+
+        uniform sampler2D Texture;
+        uniform vec4 Tint;
 
         void main()
         {
