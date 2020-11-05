@@ -10,6 +10,7 @@
 #include <lua.hpp>
 
 /** Other Thirdparty Includes **/
+#include <stb/stb_image.hpp>
 
 /** Standard Includes **/
 #include <string>
@@ -112,6 +113,16 @@ public:
         __Destroy();
     }
 
+    inline void SetUniformInt(const char* _sUniform, int _nInt)
+    {
+        glUniform1i(glGetUniformLocation(m_ShaderProgram, _sUniform), _nInt);
+    }
+
+    inline void SetUniformFloat4(const char* _sUniform, float _fR, float _fG, float _fB, float _fA)
+    {
+        glUniform4f(glGetUniformLocation(m_ShaderProgram, _sUniform), _fR, _fG, _fB, _fA);
+    }
+
     inline void Bind()
     {
         /** Bind the Shader **/
@@ -136,17 +147,49 @@ private:
 
     const char* m_FilePath;
 
-    int Width,
-        Height;
+    int m_Channels,
+        m_Width,
+        m_Height;
 
     inline void __Create()
     {
-        
+        /** Flip **/
+        stbi_set_flip_vertically_on_load(1);
+
+        /** Load Image **/
+        stbi_uc* Image = stbi_load(m_FilePath, &m_Width, &m_Height, &m_Channels, 0);
+
+        /** Error check loading the image **/
+        if(Image == NULL)
+        {
+            DebugPrint("STBI", "Failed to load image.");
+            DebugPrint("STBI", stbi_failure_reason());
+            return;
+        }
+
+        printf("%s %dx%d %d\n", m_FilePath, m_Width, m_Height, m_Channels);
+
+        /** Create Texture **/
+        glCreateTextures(GL_TEXTURE_2D, 1, &m_TextureID);
+        glTextureStorage2D(m_TextureID, 1, GL_RGB8, m_Width, m_Height);
+
+        /** Texture Options **/
+        glTextureParameteri(m_TextureID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTextureParameteri(m_TextureID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_S, GL_REPEAT);	
+        glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+        /** Set Texture data **/
+        glTextureSubImage2D(m_TextureID, 0, 0, 0, m_Width, m_Height, GL_RGB, GL_UNSIGNED_BYTE, Image);
+
+        /** Free Texture **/
+        stbi_image_free(Image);
     }
 
     inline void __Destroy()
     {
-
+        glDeleteTextures(1, &m_TextureID);
     }
 
 public:
@@ -161,13 +204,32 @@ public:
         __Destroy();
     }
 
+    inline GLuint Get()
+    {
+        /** Get the OpenGL Texture ID **/
+        return m_TextureID;
+    }
+
+    inline void Bind(unsigned _uPosition = 0u)
+    {
+        /** Bind the Texture **/
+        glActiveTexture(GL_TEXTURE0 + _uPosition);
+        glBindTexture(GL_TEXTURE_2D, m_TextureID);
+    }
+
 };
 
 /** OpenGL Message Callback **/
-void GLAPIENTRY OpenGLCallback
+void OpenGLCallback
     (GLenum, GLenum type, GLuint, GLenum severity, GLsizei, const GLchar* message, const void*)
 {
     printf("OpenGL: %s type = 0x%x, severity = 0x%x, message = %s\n", (type == GL_DEBUG_TYPE_ERROR ? "ERROR" : "" ), type, severity, message);
+}
+
+void GLFWCallback
+    (int _nErrorCode, const char* _sDescription)
+{
+    printf("GLFW: [%d] %s\n", _nErrorCode, _sDescription);
 }
 
 /** Main **/
@@ -179,9 +241,12 @@ int main()
         DebugPrint("GLFW", "Failed to initialize.");
         return -1;
     }
+    
+    /** Set GLFW Error Callback **/
+    glfwSetErrorCallback(GLFWCallback);
 
     /** Create a GLFW Window **/
-    GLFWwindow* glfwWindow = glfwCreateWindow(800, 600, "Write Games Not Game Engines", nullptr, nullptr);
+    GLFWwindow* glfwWindow = glfwCreateWindow(1024, 512, "Write Games Not Game Engines", nullptr, nullptr);
     glfwMakeContextCurrent(glfwWindow);
 
     /** Error Check **/
@@ -200,16 +265,24 @@ int main()
 
     DebugPrint("GLFW", "Window created.");
 
+    /** Set GLFW Callbacks **/
+    auto GLFWResize = [](GLFWwindow* _pWindow, int _nWidth, int _nHeight) -> void
+    {
+        glViewport(0, 0, _nWidth, _nHeight);
+    };
+
+    glfwSetFramebufferSizeCallback(glfwWindow, GLFWResize);
+
     /** Enable OpenGL Debugging **/
     glEnable(GL_DEBUG_OUTPUT);
     glDebugMessageCallback(OpenGLCallback, 0);
 
     /** Quad Vertices **/
     float       QuadVertices[]  = {
-         0.5f,  0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f,
-        -0.5f,  0.5f, 0.0f
+         0.5f,  0.5f, 0.0f,     1.0f, 1.0f,
+         0.5f, -0.5f, 0.0f,     1.0f, 0.0f,
+        -0.5f, -0.5f, 0.0f,     0.0f, 0.0f,
+        -0.5f,  0.5f, 0.0f,     0.0f, 1.0f
     };
 
     /** Quad Indices **/
@@ -238,8 +311,12 @@ int main()
     /** Create VBO **/
     glBindBuffer(GL_ARRAY_BUFFER, QuadVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), QuadVertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(0u, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+
+    glVertexAttribPointer(0u, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(0));
     glEnableVertexAttribArray(0u);
+
+    glVertexAttribPointer(1u, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1u);
 
     /** Create EBO **/
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, QuadEBO);
@@ -254,19 +331,19 @@ int main()
     float LastUpdateTime = 0.0f;
     float DeltaTime = 0.0f;
 
-
     /** Define Shaders **/
     const char* VertS = R"(
         #version 440 core
 
         layout (location = 0) in vec3 Position;
+        layout (location = 1) in vec2 TexCoord;
 
-        uniform sampler2D Texture;
-        uniform vec4 Tint;
+        out vec2 oTexCoord;
 
         void main()
         {
             gl_Position = vec4(Position, 1.0f);
+            oTexCoord = TexCoord;
         }
 
     )";
@@ -274,54 +351,69 @@ int main()
     const char* FragS = R"(
         #version 440 core
 
-        out vec4 FragColor;
+        out vec4 oFragColor;
+
+        in vec2 oTexCoord;
+
+        uniform sampler2D uTexture;
+        uniform vec4 uTint;
 
         void main()
         {
-            FragColor = vec4(1.0f, 0.3f, 0.6f, 1.0f);
+            oFragColor = texture(uTexture, oTexCoord) * uTint;
         }
 
     )";
 
-    /** Create Shader **/
-    Shader BasicShader(VertS, FragS);
-
-    /** Run main loop while the window is open **/
-    while(!glfwWindowShouldClose(glfwWindow))
     {
-        /** Calculate Delta **/
-        float GLFWTime = (float)glfwGetTime();
-		DeltaTime = GLFWTime - LastUpdateTime;
-		LastUpdateTime = GLFWTime;
 
-        /** FPS: 1.0f / DeltaTime **/
-        // printf("Update FPS: %.0f\n", 1.0f / DeltaTime);
+        /** Create Shader **/
+        Shader BasicShader(VertS, FragS);
 
-        /** Poll Window Events **/
-        glfwPollEvents();
+        /** Create Texture **/
+        Texture BasicTexture("core/Image.png");
 
-        /** Clear OpenGL **/
-        glClearColor(0.12f, 0.12f, 0.12f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        /** Run main loop while the window is open **/
+        while(!glfwWindowShouldClose(glfwWindow))
+        {
+            /** Calculate Delta **/
+            float GLFWTime = (float)glfwGetTime();
+            DeltaTime = GLFWTime - LastUpdateTime;
+            LastUpdateTime = GLFWTime;
 
-        /** Simple Scene **/
-        { /** Begin **/
+            /** FPS: 1.0f / DeltaTime **/
+            // printf("Update FPS: %.0f\n", 1.0f / DeltaTime);
 
-            /** Bind Shader **/
-            BasicShader.Bind();
+            /** Poll Window Events **/
+            glfwPollEvents();
 
-            /** Render Quad **/
-            glBindVertexArray(QuadVAO);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, QuadEBO);
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+            /** Clear OpenGL **/
+            glClearColor(0.12f, 0.12f, 0.12f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            /** Reset currect OpenGL shader **/
-            Shader::Reset();
+            /** Simple Scene **/
+            { /** Begin **/
 
-        } /** End **/
+                /** Bind Texture **/
+                BasicTexture.Bind();
 
-        /** Swap GLFW Window Buffers **/
-        glfwSwapBuffers(glfwWindow);
+                /** Bind Shader **/
+                BasicShader.Bind();
+
+                /** Set Shader Uniforms **/
+                BasicShader.SetUniformInt("uTexture", 0);
+                BasicShader.SetUniformFloat4("uTint", 1.0f, 0.3f, 0.6f, 1.0f);
+
+                /** Render Quad **/
+                glBindVertexArray(QuadVAO);
+                glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+
+            } /** End **/
+
+            /** Swap GLFW Window Buffers **/
+            glfwSwapBuffers(glfwWindow);
+        }
+
     }
 
     /** Destroy OpenGL Objects **/
