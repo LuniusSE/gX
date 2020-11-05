@@ -371,7 +371,7 @@ int main()
         Shader BasicShader(VertS, FragS);
 
         /** Create Texture **/
-        Texture BasicTexture("core/Image.png");
+        Texture BasicTexture("sandbox/resources/Image.png");
 
         /** Run main loop while the window is open **/
         while(!glfwWindowShouldClose(glfwWindow))
