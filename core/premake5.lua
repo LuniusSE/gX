@@ -2,6 +2,10 @@ project "gX-Core"
     kind "ConsoleApp"
     language "C++"
 
+    dependson {
+        "gX-ThirdParty"
+    }
+
     objdir "../build/obj/%{prj.name}"
     targetdir "../build/%{prj.name}"
 
@@ -10,16 +14,21 @@ project "gX-Core"
         "**.hpp"
     }
 
+    includedirs {
+        "../thirdparty"
+    }
+
     links {
         "glfw",
         "GLEW",
         "GL",
-        "lua"
+        "lua",
+        "gX-ThirdParty"
     }
 
     filter "configurations:Debug"
         defines { "GX_DEBUG" }
-        flags { "Symbols" }
+        symbols "On"
 
     filter "configurations:Release"
         defines { "GX_RELEASE" }
