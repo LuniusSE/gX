@@ -11,4 +11,5 @@ workspace "gX-Workspace"
         "MultiProcessorCompile"
     }
 
+include "thirdparty"
 include "core"
