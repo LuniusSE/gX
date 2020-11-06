@@ -20,7 +20,6 @@ project "gX-Core"
 
     links {
         "glfw",
-        "GLEW",
         "GL",
         "lua",
         "gX-ThirdParty"
