@@ -3,11 +3,15 @@
 //
 
 /** Graphics Includes **/
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 /** Lua Includes **/
 #include <lua.hpp>
+
+/** GLM Includes **/
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 /** Other Thirdparty Includes **/
 #include <stb/stb_image.hpp>
@@ -122,6 +126,11 @@ public:
     inline void SetUniformFloat4(const char* _sUniform, float _fR, float _fG, float _fB, float _fA)
     {
         glUniform4f(glGetUniformLocation(m_ShaderProgram, _sUniform), _fR, _fG, _fB, _fA);
+    }
+
+    inline void SetUniformMat4(const char* _sUniform, const glm::mat4& _fMatrix4x4)
+    {
+        glUniformMatrix4fv(glGetUniformLocation(m_ShaderProgram, _sUniform), 1, GL_FALSE, glm::value_ptr(_fMatrix4x4));
     }
 
     inline void Bind()
@@ -288,6 +297,7 @@ unsigned AttribGLenumType(const Attrib& _eAttrib)
 
 void HandleVertexAttribPointers(const std::vector<Attrib>& _vAttribs)
 {
+    /** Declare variables **/
     unsigned uStride = 0u;
     unsigned uIndex = 0u;
     int nOffset = 0u;
@@ -324,6 +334,14 @@ void HandleVertexAttribPointers(const std::vector<Attrib>& _vAttribs)
 /** Main **/
 int main()
 {
+    /** Texture Position **/
+    static float X = 0.0f, Y = 0.0f;
+    static float Speed = 1.0f;
+    
+    /** Time it took between updates **/
+    static float LastUpdateTime = 0.0f;
+    static float DeltaTime = 0.0f;
+
     /** Initialize GLFW **/
     if (glfwInit() == GLFW_FALSE)
     {
@@ -337,6 +355,7 @@ int main()
     /** Create a GLFW Window **/
     GLFWwindow* glfwWindow = glfwCreateWindow(1024, 512, "Write Games Not Game Engines", nullptr, nullptr);
     glfwMakeContextCurrent(glfwWindow);
+    glfwSwapInterval(1);
 
     /** Error Check **/
     if (!glfwWindow)
@@ -345,14 +364,17 @@ int main()
         return -1;
     }
 
-    /** Initialize GLEW **/
-    if (glewInit() != GLEW_OK)
+    /** Initialize GLAD **/
+    if (!gladLoadGL())
     {
-        DebugPrint("GLEW", "Failed to initialize.");
+        DebugPrint("GLAD", "Failed to initialize.");
         return -1;
     }
 
     DebugPrint("GLFW", "Window created.");
+
+    /** Enable GLFW sticky input **/
+    glfwSetInputMode(glfwWindow, GLFW_STICKY_KEYS, GLFW_TRUE);
 
     /** Set GLFW Callbacks **/
     auto GLFWResize = [](GLFWwindow* _pWindow, int _nWidth, int _nHeight) -> void
@@ -361,7 +383,6 @@ int main()
     };
 
     glfwSetFramebufferSizeCallback(glfwWindow, GLFWResize);
-
     /** Enable OpenGL Debugging **/
     glEnable(GL_DEBUG_OUTPUT);
     glDebugMessageCallback(OpenGLCallback, 0);
@@ -392,7 +413,7 @@ int main()
     GLuint QuadEBO = 0u;
     glCreateBuffers(1, &QuadEBO);
 
-    DebugPrint("GLEW", "GL Objects initialized.");
+    DebugPrint("GLAD", "GL Objects initialized.");
     
     /** Create VAO **/
     glBindVertexArray(QuadVAO);
@@ -414,11 +435,7 @@ int main()
     /** Unbind Quad VAO before loop **/
     glBindVertexArray(0u);
 
-    DebugPrint("GLEW", "GL Objects created.");
-
-    /** Time it took between updates **/
-    float LastUpdateTime = 0.0f;
-    float DeltaTime = 0.0f;
+    DebugPrint("GLAD", "GL Objects created.");
 
     /** Define Shaders **/
     const char* VertS = R"(
@@ -429,9 +446,12 @@ int main()
 
         out vec2 oTexCoord;
 
+        uniform mat4 uTransform;
+        uniform mat4 uViewProjection;
+
         void main()
         {
-            gl_Position = vec4(Position, 1.0f);
+            gl_Position = uTransform * vec4(Position, 1.0f);
             oTexCoord = TexCoord;
         }
 
@@ -457,10 +477,10 @@ int main()
     {
 
         /** Create Shader **/
-        Shader BasicShader(VertS, FragS);
+        Shader BasicShader = Shader(VertS, FragS);
 
         /** Create Texture **/
-        Texture BasicTexture("sandbox/resources/Image.png");
+        Texture BasicTexture = Texture("sandbox/resources/Image.png");
 
         /** Run main loop while the window is open **/
         while(!glfwWindowShouldClose(glfwWindow))
@@ -480,6 +500,24 @@ int main()
             glClearColor(0.12f, 0.12f, 0.12f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+            /** Input **/
+            {
+                if (glfwGetKey(glfwWindow, GLFW_KEY_W) != GLFW_RELEASE)
+                    Y += Speed * DeltaTime;
+
+                if (glfwGetKey(glfwWindow, GLFW_KEY_A) != GLFW_RELEASE)
+                    X -= Speed * DeltaTime;
+
+                if (glfwGetKey(glfwWindow, GLFW_KEY_S) != GLFW_RELEASE)
+                    Y -= Speed * DeltaTime;
+
+                if (glfwGetKey(glfwWindow, GLFW_KEY_D) != GLFW_RELEASE)
+                    X += Speed * DeltaTime;
+            }
+
+            /** Quad Transform **/
+            glm::mat4 Transform = glm::translate(glm::mat4(1.0f), glm::vec3(X, Y, 0.0f));
+
             /** Simple Scene **/
             { /** Begin **/
 
@@ -490,8 +528,9 @@ int main()
                 BasicShader.Bind();
 
                 /** Set Shader Uniforms **/
+                BasicShader.SetUniformMat4("uTransform", Transform);
                 BasicShader.SetUniformInt("uTexture", 0);
-                BasicShader.SetUniformFloat4("uTint", 1.0f, 0.3f, 0.6f, 1.0f);
+                BasicShader.SetUniformFloat4("uTint", 1.0f, 0.3f, 0.3f, 1.0f);
 
                 /** Render Quad **/
                 glBindVertexArray(QuadVAO);
@@ -510,7 +549,7 @@ int main()
     glDeleteBuffers(1, &QuadEBO);
     glDeleteVertexArrays(1, &QuadVAO);
 
-    DebugPrint("GLEW", "GL Objects destroyed.");
+    DebugPrint("GLAD", "GL Objects destroyed.");
 
     /** Destroy the GLFW Window **/
     glfwDestroyWindow(glfwWindow);
