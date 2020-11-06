@@ -22,6 +22,7 @@ project "gX-Core"
         "glfw",
         "GL",
         "lua",
+        "dl",
         "gX-ThirdParty"
     }
 
