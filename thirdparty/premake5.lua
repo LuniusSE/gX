@@ -2,8 +2,8 @@ project "gX-ThirdParty"
     kind "StaticLib"
     language "C++"
 
-    objdir "../build/obj/%{prj.name}"
-    targetdir "../build/%{prj.name}"
+    objdir "../.build/obj/%{prj.name}"
+    targetdir "../.build/%{prj.name}"
 
     files {
         "**.cpp",
