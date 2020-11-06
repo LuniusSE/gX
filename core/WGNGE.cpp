@@ -14,6 +14,7 @@
 
 /** Standard Includes **/
 #include <string>
+#include <vector>
 
 /**         Debug Macros            **/
 #define DebugPrint(A, M)            printf("%s\t\t %s:%d %s\n", A, __FUNCTION__, __LINE__, M)
@@ -232,6 +233,94 @@ void GLFWCallback
     printf("GLFW: [%d] %s\n", _nErrorCode, _sDescription);
 }
 
+/** OpenGL Attribs **/
+enum class Attrib
+{
+    FLOAT,
+    FLOAT2,
+    FLOAT3,
+    FLOAT4
+};
+
+unsigned AttribLength(const Attrib& _eAttrib)
+{
+    switch (_eAttrib)
+    {
+    /** Return Length **/
+    case Attrib::FLOAT:  return 1;
+    case Attrib::FLOAT2: return 2;
+    case Attrib::FLOAT3: return 3;
+    case Attrib::FLOAT4: return 4;
+    default: break;
+    }
+    return 0u;
+}
+
+unsigned AttribTypeSize(const Attrib& _eAttrib)
+{
+    switch (_eAttrib)
+    {
+    /** Return Type Size **/
+    case Attrib::FLOAT:
+    case Attrib::FLOAT2:
+    case Attrib::FLOAT3:
+    case Attrib::FLOAT4: 
+        return sizeof(float);
+    default: break;
+    }
+    return 0u;
+}
+
+unsigned AttribGLenumType(const Attrib& _eAttrib)
+{
+    switch (_eAttrib)
+    {
+    /** Return Type GLenum **/
+    case Attrib::FLOAT:
+    case Attrib::FLOAT2:
+    case Attrib::FLOAT3:
+    case Attrib::FLOAT4: 
+        return GL_FLOAT;
+    default: break;
+    }
+    return 0u;
+}
+
+void HandleVertexAttribPointers(const std::vector<Attrib>& _vAttribs)
+{
+    unsigned uStride = 0u;
+    unsigned uIndex = 0u;
+    int nOffset = 0u;
+
+    /** Loop through all Attribs in _vAttribs **/
+    /** Calculate Stride **/
+    for(const Attrib& eAttrib : _vAttribs)
+    {
+        uStride += AttribLength(eAttrib) * AttribTypeSize(eAttrib);
+    }
+
+    /** Loop through all Attribs in _vAttribs **/
+    /** Setup VertexAttribPointers **/
+    for(const Attrib& eAttrib : _vAttribs)
+    {
+        /** Fillout VertexAttribPointer **/
+        glVertexAttribPointer(uIndex, AttribLength(eAttrib), AttribGLenumType(eAttrib), GL_FALSE, uStride, (void*)(nOffset));
+        glEnableVertexAttribArray(uIndex);
+
+        /** Determine next offset **/
+        nOffset += AttribLength(eAttrib) * AttribTypeSize(eAttrib);
+
+        /** Increment the attrib index **/
+        uIndex++;
+    }
+
+    /** Example: **/
+    // glVertexAttribPointer(0u, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(0));
+    // glEnableVertexAttribArray(0u);
+    // glVertexAttribPointer(1u, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    // glEnableVertexAttribArray(1u);
+}
+
 /** Main **/
 int main()
 {
@@ -312,11 +401,11 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, QuadVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), QuadVertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0u, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(0));
-    glEnableVertexAttribArray(0u);
-
-    glVertexAttribPointer(1u, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1u);
+    /** Fillout VertexAttribPointer for given Attribs **/
+    HandleVertexAttribPointers({
+        Attrib::FLOAT3,
+        Attrib::FLOAT2
+    });
 
     /** Create EBO **/
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, QuadEBO);
