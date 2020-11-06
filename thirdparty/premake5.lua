@@ -6,12 +6,15 @@ project "gX-ThirdParty"
     targetdir "../.build/%{prj.name}"
 
     files {
+        "**.h",
+        "**.c",
         "**.cpp",
         "**.hpp"
     }
 
     links {
-
+        "GL",
+        "dl"
     }
 
     filter "configurations:Debug"
