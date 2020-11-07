@@ -11,10 +11,14 @@
 
 /** GLM Includes **/
 #include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 /** Other Thirdparty Includes **/
 #include <stb/stb_image.hpp>
+
+/** gX **/
+#include "maths/Orthographic.hpp"
 
 /** Standard Includes **/
 #include <string>
@@ -323,12 +327,6 @@ void HandleVertexAttribPointers(const std::vector<Attrib>& _vAttribs)
         /** Increment the attrib index **/
         uIndex++;
     }
-
-    /** Example: **/
-    // glVertexAttribPointer(0u, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(0));
-    // glEnableVertexAttribArray(0u);
-    // glVertexAttribPointer(1u, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-    // glEnableVertexAttribArray(1u);
 }
 
 /** Main **/
@@ -336,7 +334,7 @@ int main()
 {
     /** Texture Position **/
     static float X = 0.0f, Y = 0.0f;
-    static float Speed = 1.0f;
+    static float Speed = 10.0f;
     
     /** Time it took between updates **/
     static float LastUpdateTime = 0.0f;
@@ -353,7 +351,7 @@ int main()
     glfwSetErrorCallback(GLFWCallback);
 
     /** Create a GLFW Window **/
-    GLFWwindow* glfwWindow = glfwCreateWindow(1024, 512, "Write Games Not Game Engines", nullptr, nullptr);
+    GLFWwindow* glfwWindow = glfwCreateWindow(800, 600, "Write Games Not Game Engines", nullptr, nullptr);
     glfwMakeContextCurrent(glfwWindow);
     glfwSwapInterval(1);
 
@@ -383,6 +381,7 @@ int main()
     };
 
     glfwSetFramebufferSizeCallback(glfwWindow, GLFWResize);
+
     /** Enable OpenGL Debugging **/
     glEnable(GL_DEBUG_OUTPUT);
     glDebugMessageCallback(OpenGLCallback, 0);
@@ -451,7 +450,7 @@ int main()
 
         void main()
         {
-            gl_Position = uTransform * vec4(Position, 1.0f);
+            gl_Position = uViewProjection * uTransform * vec4(Position, 1.0f);
             oTexCoord = TexCoord;
         }
 
@@ -482,6 +481,9 @@ int main()
         /** Create Texture **/
         Texture BasicTexture = Texture("sandbox/resources/Image.png");
 
+        /** Orthographic **/
+        Orthographic Projection = Orthographic({ 800, 600 }, 10.0f);
+
         /** Run main loop while the window is open **/
         while(!glfwWindowShouldClose(glfwWindow))
         {
@@ -502,6 +504,7 @@ int main()
 
             /** Input **/
             {
+
                 if (glfwGetKey(glfwWindow, GLFW_KEY_W) != GLFW_RELEASE)
                     Y += Speed * DeltaTime;
 
@@ -513,10 +516,11 @@ int main()
 
                 if (glfwGetKey(glfwWindow, GLFW_KEY_D) != GLFW_RELEASE)
                     X += Speed * DeltaTime;
+                
             }
 
             /** Quad Transform **/
-            glm::mat4 Transform = glm::translate(glm::mat4(1.0f), glm::vec3(X, Y, 0.0f));
+            glm::mat4 Transform = glm::translate(glm::vec3(X, Y, 0.0f)) * glm::scale(glm::vec3( 1, 1, /*7.68f, 3.84f,*/ 1.0f));
 
             /** Simple Scene **/
             { /** Begin **/
@@ -529,6 +533,7 @@ int main()
 
                 /** Set Shader Uniforms **/
                 BasicShader.SetUniformMat4("uTransform", Transform);
+                BasicShader.SetUniformMat4("uViewProjection", Projection);
                 BasicShader.SetUniformInt("uTexture", 0);
                 BasicShader.SetUniformFloat4("uTint", 1.0f, 0.3f, 0.3f, 1.0f);
 
