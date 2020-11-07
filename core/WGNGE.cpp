@@ -30,13 +30,6 @@
 /**         OpenGL Helpers          **/
 
 /**
- * TODO:
- *  VBO
- *  VAO
- *  EBO
- **/
-
-/**
  * Simple OpenGL shader class
  **/
 class Shader
@@ -329,6 +322,67 @@ void HandleVertexAttribPointers(const std::vector<Attrib>& _vAttribs)
     }
 }
 
+/**
+ * TODO:
+ *  VBO
+ *  EBO
+ **/
+
+class VertexArray
+{
+private:
+    GLuint m_GLid;
+
+    inline void __Create()
+    {
+        /** Create the VertexArray **/
+        glCreateVertexArrays(1, &m_GLid);
+    }
+
+    inline void __Destroy()
+    {
+        /** Delete VertexArray **/
+        glDeleteVertexArrays(1, &m_GLid);
+    }
+
+public:
+    VertexArray()
+     : m_GLid(0u)
+    {
+        __Create();
+    }
+
+    ~VertexArray()
+    {
+        __Destroy();
+    }
+
+    inline void AttachVertexBuffer(GLuint _gluVertexBuffer)
+    {
+        glBindVertexArray(m_GLid);
+        glBindBuffer(GL_ARRAY_BUFFER, _gluVertexBuffer);
+    }
+
+    inline void AttachElementBuffer(GLuint _gluElementBuffer)
+    {
+        glBindVertexArray(m_GLid);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _gluElementBuffer);
+    }
+
+    inline void Bind()
+    {
+        /** Bind **/
+        glBindVertexArray(m_GLid);
+    }
+
+    static inline void Reset()
+    {
+        /** Unbind the bound VertexArray **/
+        glBindVertexArray(0u);
+    }
+
+};
+
 /** Main **/
 int main()
 {
@@ -401,8 +455,7 @@ int main()
     };  
 
     /** Quad Vertex Array Object **/
-    GLuint QuadVAO = 0u;
-    glCreateVertexArrays(1, &QuadVAO);
+    VertexArray vertexArray;
 
     /** Quad Vertex Buffer Object **/
     GLuint QuadVBO = 0u;
@@ -413,13 +466,12 @@ int main()
     glCreateBuffers(1, &QuadEBO);
 
     DebugPrint("GLAD", "GL Objects initialized.");
-    
-    /** Create VAO **/
-    glBindVertexArray(QuadVAO);
 
     /** Create VBO **/
     glBindBuffer(GL_ARRAY_BUFFER, QuadVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), QuadVertices, GL_STATIC_DRAW);
+
+    vertexArray.AttachVertexBuffer(QuadVBO);
 
     /** Fillout VertexAttribPointer for given Attribs **/
     HandleVertexAttribPointers({
@@ -430,6 +482,8 @@ int main()
     /** Create EBO **/
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, QuadEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(QuadIndices), QuadIndices, GL_STATIC_DRAW); 
+
+    vertexArray.AttachElementBuffer(QuadEBO);
 
     /** Unbind Quad VAO before loop **/
     glBindVertexArray(0u);
@@ -520,7 +574,7 @@ int main()
             }
 
             /** Quad Transform **/
-            glm::mat4 Transform = glm::translate(glm::vec3(X, Y, 0.0f)) * glm::scale(glm::vec3( 1, 1, /*7.68f, 3.84f,*/ 1.0f));
+            glm::mat4 Transform = glm::translate(glm::vec3(X, Y, 0.0f)) * glm::scale(glm::vec3( 7.68f, 3.84f, 1.0f));
 
             /** Simple Scene **/
             { /** Begin **/
@@ -538,7 +592,7 @@ int main()
                 BasicShader.SetUniformFloat4("uTint", 1.0f, 0.3f, 0.3f, 1.0f);
 
                 /** Render Quad **/
-                glBindVertexArray(QuadVAO);
+                vertexArray.Bind();
                 glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
             } /** End **/
@@ -552,7 +606,6 @@ int main()
     /** Destroy OpenGL Objects **/
     glDeleteBuffers(1, &QuadVBO);
     glDeleteBuffers(1, &QuadEBO);
-    glDeleteVertexArrays(1, &QuadVAO);
 
     DebugPrint("GLAD", "GL Objects destroyed.");
 
