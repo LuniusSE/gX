@@ -16,7 +16,8 @@ project "gX-Core"
 
     includedirs {
         "../thirdparty",
-        "../core"
+        "../core",
+        "common/"
     }
 
     links {
