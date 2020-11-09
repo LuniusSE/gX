@@ -13,4 +13,5 @@ workspace "gX-Workspace"
     }
 
 include "thirdparty"
+include "platform"
 include "core"
