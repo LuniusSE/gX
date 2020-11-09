@@ -19,6 +19,7 @@
 
 /** gX **/
 #include "maths/Orthographic.hpp"
+#include "system/Pointers.hpp"
 
 /** Standard Includes **/
 #include <string>
@@ -449,7 +450,7 @@ int main()
     };
 
     /** Quad Indices **/
-    unsigned    QuadIndices[]   = {
+    gx::Index    QuadIndices[]   = {
         0u, 1u, 3u,
         1u, 2u, 3u
     };  
@@ -470,7 +471,6 @@ int main()
     /** Create VBO **/
     glBindBuffer(GL_ARRAY_BUFFER, QuadVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), QuadVertices, GL_STATIC_DRAW);
-
     vertexArray.AttachVertexBuffer(QuadVBO);
 
     /** Fillout VertexAttribPointer for given Attribs **/
@@ -482,7 +482,6 @@ int main()
     /** Create EBO **/
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, QuadEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(QuadIndices), QuadIndices, GL_STATIC_DRAW); 
-
     vertexArray.AttachElementBuffer(QuadEBO);
 
     /** Unbind Quad VAO before loop **/
@@ -536,7 +535,7 @@ int main()
         Texture BasicTexture = Texture("sandbox/resources/Image.png");
 
         /** Orthographic **/
-        Orthographic Projection = Orthographic({ 800, 600 }, 10.0f);
+        gx::Orthographic Projection = gx::Orthographic({ 800, 600 }, 10.0f);
 
         /** Run main loop while the window is open **/
         while(!glfwWindowShouldClose(glfwWindow))
