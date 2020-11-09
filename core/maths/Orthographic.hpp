@@ -9,6 +9,8 @@
 /** Include **/
 #include "Math.hpp"
 
+_GX_BEGIN
+
 /**
  * Orthographic Projection
  * USAGE: Camera
@@ -75,5 +77,7 @@ public:
 	{ return GetViewProjection(); }
 
 };
+
+_GX_END
 
 #endif

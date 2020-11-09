@@ -3,6 +3,8 @@
 */
 #include "Orthographic.hpp"
 
+_GX_BEGIN
+
 /** Initialize Variables **/
 Orthographic::Orthographic(const Vec2& _vSize, float _fScale)
     : m_View(IdentityMatrix), m_Projection(IdentityMatrix),
@@ -92,3 +94,5 @@ Mat4 Orthographic::GetViewProjection(void)
 {
     return m_Projection * m_View;
 }
+
+_GX_END
