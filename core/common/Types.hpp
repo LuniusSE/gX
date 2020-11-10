@@ -14,12 +14,17 @@ _GX_BEGIN
 /** Floating Points **/
 using Float     = float;
 
+/** Redef **/
+using Int       = int_least32_t;
+using uInt      = uint_least32_t;
+
 /** Special Integers **/
-using Index     = uint_least32_t;
-using Program   = uint_least32_t;
-using Size      = uint_least32_t;
-using Time      = uint_least32_t;
-using Status    =  int_least32_t;
+using Index     = uInt;
+using Program   = uInt;
+using Size      = uInt;
+using Count     = uInt;
+using Time      = uInt;
+using Status    =  Int;
 
 _GX_END
 
