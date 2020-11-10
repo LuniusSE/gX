@@ -7,6 +7,7 @@
 
 /** Headers **/
 #include <Common.hpp>
+#include <string>
 
 _GX_BEGIN
 
@@ -36,7 +37,7 @@ enum class FileOptions
  * @param[in] _sPath Relative Path
  * @returns Absolute Path
  **/
-const char* FindPath(const char* _sPath);
+std::string FindPath(const char* _sPath);
 
 /*! @brief Open file
  * TODO: Impl

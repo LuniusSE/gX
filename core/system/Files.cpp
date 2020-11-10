@@ -12,9 +12,9 @@ _GX_BEGIN
  * /Files.cpp
  *  FindPath Implementation
  **/
-const char* FindPath(const char* _sPath)
+std::string FindPath(const char* _sPath)
 {
-    return std::filesystem::path(_sPath).c_str();
+    return std::filesystem::path(_sPath).string();
 }
 
 _GX_END
