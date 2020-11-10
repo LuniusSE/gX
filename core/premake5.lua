@@ -1,5 +1,5 @@
 project "gX-Core"
-    kind "ConsoleApp"
+    kind "StaticLib"
     language "C++"
 
     dependson {
