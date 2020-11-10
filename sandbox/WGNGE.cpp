@@ -18,8 +18,9 @@
 #include <stb/stb_image.hpp>
 
 /** gX **/
-#include "maths/Orthographic.hpp"
-#include "system/Pointers.hpp"
+#include <maths/Orthographic.hpp>
+#include <system/Pointers.hpp>
+#include <system/Files.hpp>
 
 /** Standard Includes **/
 #include <string>
@@ -171,6 +172,7 @@ private:
         if(Image == NULL)
         {
             DebugPrint("STBI", "Failed to load image.");
+            DebugPrint("STBI", m_FilePath);
             DebugPrint("STBI", stbi_failure_reason());
             return;
         }
@@ -231,13 +233,13 @@ public:
 void OpenGLCallback
     (GLenum, GLenum type, GLuint, GLenum severity, GLsizei, const GLchar* message, const void*)
 {
-    printf("OpenGL: %s type = 0x%x, severity = 0x%x, message = %s\n", (type == GL_DEBUG_TYPE_ERROR ? "ERROR" : "" ), type, severity, message);
+    printf("OpenGL\t\t [%d] %s\n", type, message);
 }
 
 void GLFWCallback
     (int _nErrorCode, const char* _sDescription)
 {
-    printf("GLFW: [%d] %s\n", _nErrorCode, _sDescription);
+    printf("GLFW\t\t [%d] %s\n", _nErrorCode, _sDescription);
 }
 
 /** OpenGL Attribs **/
@@ -532,7 +534,7 @@ int main()
         Shader BasicShader = Shader(VertS, FragS);
 
         /** Create Texture **/
-        Texture BasicTexture = Texture("sandbox/resources/Image.png");
+        Texture BasicTexture = Texture(gx::FindPath("sandbox/resources/Image.png").c_str());
 
         /** Orthographic **/
         gx::Orthographic Projection = gx::Orthographic({ 800, 600 }, 10.0f);
