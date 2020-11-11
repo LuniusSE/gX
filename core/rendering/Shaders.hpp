@@ -38,7 +38,7 @@ public:
 
     /*! @brief Create a new Shader from source
     **/
-    static Reference<Shader> Create(const std::string& _sSource);
+    static Reference<Shader> Create(const std::string& _sVertexSource, const std::string& _sFragmentSource);
 
     /*! @brief Create a new Shader from a file
     **/
