@@ -3,7 +3,7 @@ project "gX-Sandbox"
     language "C++"
 
     dependson {
-        "gXtp-glad"
+        "gXtp-glad",
         "gXtp-glfw",
         "gXtp-stb",
         "gXtp-glm",
@@ -27,13 +27,19 @@ project "gX-Sandbox"
     }
 
     links {
-        "GL",
-        "gXtp-glad"
+        "gXtp-glad",
         "gXtp-glfw",
         "gXtp-stb",
         "gXtp-glm",
         "gX-Core"
     }
+
+    filter "system:windows"
+        links { "opengl32" }
+
+    filter "system:linux"
+        links { "X11", "GL", "dl" }
+        linkoptions { "-pthread" }
 
     filter "configurations:Debug"
         defines { "GX_DEBUG" }
