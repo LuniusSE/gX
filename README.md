@@ -28,3 +28,11 @@ $ chmod +x build.sh
 ```
 
 <h4>Support for other platforms isn't guaranteed yet.</h4>
+
+# Small TODO List
+Debugging
+    - Logging
+    - Memory Usage / Leak Detector
+    - Profiling
+System
+    - Memory Allocator
