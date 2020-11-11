@@ -18,6 +18,7 @@
 #include <stb/stb_image.hpp>
 
 /** gX **/
+#include <rendering/Shaders.hpp>
 #include <rendering/Arrays.hpp>
 #include <rendering/Buffers.hpp>
 #include <maths/Orthographic.hpp>
@@ -373,7 +374,7 @@ int main()
     {
 
         /** Create Shader **/
-        Shader BasicShader = Shader(VertS, FragS);
+        gx::Reference<gx::Shader> BasicShader = gx::Shader::Create(VertS, FragS);
 
         /** Create Texture **/
         Texture BasicTexture = Texture(gx::FindPath("sandbox/resources/Image.png").c_str());
@@ -426,13 +427,13 @@ int main()
                 BasicTexture.Bind();
 
                 /** Bind Shader **/
-                BasicShader.Bind();
+                BasicShader->Bind();
 
                 /** Set Shader Uniforms **/
-                BasicShader.SetUniformMat4("uTransform", Transform);
-                BasicShader.SetUniformMat4("uViewProjection", Projection);
-                BasicShader.SetUniformInt("uTexture", 0);
-                BasicShader.SetUniformFloat4("uTint", 1.0f, 0.3f, 0.3f, 1.0f);
+                BasicShader->SetUniformMat4("uTransform", Transform);
+                BasicShader->SetUniformMat4("uViewProjection", Projection);
+                BasicShader->SetUniformInt("uTexture", 0);
+                BasicShader->SetUniformFloat4("uTint", { 1.0f, 0.3f, 0.3f, 1.0f} );
 
                 /** Render Quad **/
                 vertexArray->Bind();
