@@ -6,8 +6,7 @@ project "gX-Core"
         "gXtp-glad",
         "gXtp-glfw",
         "gXtp-stb",
-        "gXtp-glm",
-        "gX-Platform"
+        "gXtp-glm"
     }
 
     objdir "../.build/obj/%{prj.name}"
