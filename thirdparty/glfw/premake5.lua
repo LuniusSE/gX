@@ -1,4 +1,4 @@
-project "gXtp-GLFW"
+project "gXtp-glfw"
 	kind "StaticLib"
 	language "C"
 
