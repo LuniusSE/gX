@@ -30,7 +30,7 @@ public:
  * TODO:
  *  Vulkan
  **/
-class Texture2D : Texture
+class Texture2D : public Texture
 {
 public:
 	static Reference<Texture2D> Create(/** Size, Data **/);
