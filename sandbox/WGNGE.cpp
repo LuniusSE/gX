@@ -18,6 +18,8 @@
 #include <stb/stb_image.hpp>
 
 /** gX **/
+#include <rendering/Arrays.hpp>
+#include <rendering/Buffers.hpp>
 #include <maths/Orthographic.hpp>
 #include <system/Pointers.hpp>
 #include <system/Files.hpp>
@@ -444,7 +446,7 @@ int main()
     glDebugMessageCallback(OpenGLCallback, 0);
 
     /** Quad Vertices **/
-    float       QuadVertices[]  = {
+    std::vector<float> QuadVertices = {
          0.5f,  0.5f, 0.0f,     1.0f, 1.0f,
          0.5f, -0.5f, 0.0f,     1.0f, 0.0f,
         -0.5f, -0.5f, 0.0f,     0.0f, 0.0f,
@@ -452,39 +454,23 @@ int main()
     };
 
     /** Quad Indices **/
-    gx::Index    QuadIndices[]   = {
+    std::vector<gx::Index> QuadIndices = {
         0u, 1u, 3u,
         1u, 2u, 3u
     };  
 
-    /** Quad Vertex Array Object **/
-    VertexArray vertexArray;
+    /** Create VAO, VBO and EBO **/
+    gx::Reference<gx::VertexArray> vertexArray = gx::VertexArray::Create();
 
-    /** Quad Vertex Buffer Object **/
-    GLuint QuadVBO = 0u;
-    glCreateBuffers(1, &QuadVBO);
-
-    /** Quad Element Buffer Object **/
-    GLuint QuadEBO = 0u;
-    glCreateBuffers(1, &QuadEBO);
-
-    DebugPrint("GLAD", "GL Objects initialized.");
-
-    /** Create VBO **/
-    glBindBuffer(GL_ARRAY_BUFFER, QuadVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(QuadVertices), QuadVertices, GL_STATIC_DRAW);
-    vertexArray.AttachVertexBuffer(QuadVBO);
-
-    /** Fillout VertexAttribPointer for given Attribs **/
-    HandleVertexAttribPointers({
-        Attrib::FLOAT3,
-        Attrib::FLOAT2
+    gx::Reference<gx::VertexBuffer> vertexBuffer = gx::VertexBuffer::Create(QuadVertices);
+    vertexBuffer->SetLayout({
+        gx::Attribute::Float3,
+        gx::Attribute::Float2
     });
+    vertexArray->AttachVertexBuffer(vertexBuffer);
 
-    /** Create EBO **/
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, QuadEBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(QuadIndices), QuadIndices, GL_STATIC_DRAW); 
-    vertexArray.AttachElementBuffer(QuadEBO);
+    gx::Reference<gx::ElementBuffer> elementBuffer = gx::ElementBuffer::Create(QuadIndices);
+    vertexArray->AttachElementBuffer(elementBuffer);
 
     /** Unbind Quad VAO before loop **/
     glBindVertexArray(0u);
@@ -593,7 +579,7 @@ int main()
                 BasicShader.SetUniformFloat4("uTint", 1.0f, 0.3f, 0.3f, 1.0f);
 
                 /** Render Quad **/
-                vertexArray.Bind();
+                vertexArray->Bind();
                 glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
             } /** End **/
@@ -603,10 +589,6 @@ int main()
         }
 
     }
-
-    /** Destroy OpenGL Objects **/
-    glDeleteBuffers(1, &QuadVBO);
-    glDeleteBuffers(1, &QuadEBO);
 
     DebugPrint("GLAD", "GL Objects destroyed.");
 
