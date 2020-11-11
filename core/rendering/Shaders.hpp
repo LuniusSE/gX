@@ -25,7 +25,7 @@ public:
     static void Reset();
 
     virtual void SetUniformInt(const char* _sUniform, int _nData) = 0;
-    virtual void SetUniformIntArray(const char* _sUniform, int _nSize, const int* _pData) = 0;
+    virtual void SetUniformIntArray(const char* _sUniform, Count _uCount, const int* _pData) = 0;
 
     virtual void SetUniformFloat(const char* _sUniform, float _fData) = 0;
     virtual void SetUniformFloat2(const char* _sUniform, const Vec2& _vData) = 0;
