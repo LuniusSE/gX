@@ -6,12 +6,8 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
-/** GLM Includes **/
-#include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
 /** gX **/
+#include <rendering/Rendering.hpp>
 #include <rendering/Shaders.hpp>
 #include <rendering/Textures.hpp>
 #include <rendering/Arrays.hpp>
@@ -26,13 +22,6 @@
 
 /**         Debug Macros            **/
 #define DebugPrint(A, M)            printf("%s\t\t %s:%d %s\n", A, __FUNCTION__, __LINE__, M)
-
-/** OpenGL Message Callback **/
-void OpenGLCallback
-    (GLenum, GLenum type, GLuint, GLenum severity, GLsizei, const GLchar* message, const void*)
-{
-    printf("OpenGL\t\t [%d] %s\n", type, message);
-}
 
 void GLFWCallback
     (int _nErrorCode, const char* _sDescription)
@@ -88,14 +77,13 @@ int main()
     /** Set GLFW Callbacks **/
     auto GLFWResize = [](GLFWwindow* _pWindow, int _nWidth, int _nHeight) -> void
     {
-        glViewport(0, 0, _nWidth, _nHeight);
+        gx::Rendering::GetGraphicsAPI()->SetViewport({ _nWidth, _nHeight });
     };
 
     glfwSetFramebufferSizeCallback(glfwWindow, GLFWResize);
 
-    /** Enable OpenGL Debugging **/
-    glEnable(GL_DEBUG_OUTPUT);
-    glDebugMessageCallback(OpenGLCallback, 0);
+    /** Initialize GraphicsAPI to OpenGL **/
+    gx::Rendering::Initialize(gx::API::OpenGL);
 
     /** Quad Vertices **/
     std::vector<float> QuadVertices = {
@@ -125,7 +113,7 @@ int main()
     vertexArray->AttachElementBuffer(elementBuffer);
 
     /** Unbind Quad VAO before loop **/
-    glBindVertexArray(0u);
+    gx::Rendering::GetGraphicsAPI()->ResetVertexArrays();
 
     DebugPrint("GLAD", "GL Objects created.");
 
@@ -191,8 +179,8 @@ int main()
             glfwPollEvents();
 
             /** Clear OpenGL **/
-            glClearColor(0.12f, 0.12f, 0.12f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            gx::Rendering::GetGraphicsAPI()->SetClearColour({ 0.12f, 0.12f, 0.12f, 1.0f });
+            gx::Rendering::GetGraphicsAPI()->Clear();
 
             /** Input **/
             {
@@ -230,8 +218,7 @@ int main()
                 BasicShader->SetUniformFloat4("uTint", { 1.0f, 0.3f, 0.3f, 1.0f} );
 
                 /** Render Quad **/
-                vertexArray->Bind();
-                glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+                gx::Rendering::GetGraphicsAPI()->DrawIndexed(vertexArray, 6u);
 
             } /** End **/
 
@@ -242,6 +229,9 @@ int main()
     }
 
     DebugPrint("GLAD", "GL Objects destroyed.");
+
+    /** Shutdown **/
+    gx::Rendering::Shutdown();
 
     /** Destroy the GLFW Window **/
     glfwDestroyWindow(glfwWindow);
