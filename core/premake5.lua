@@ -3,7 +3,11 @@ project "gX-Core"
     language "C++"
 
     dependson {
-        "gX-ThirdParty"
+        "gXtp-glad"
+        "gXtp-glfw",
+        "gXtp-stb",
+        "gXtp-glm",
+        "gX-Platform"
     }
 
     objdir "../.build/obj/%{prj.name}"
@@ -21,11 +25,11 @@ project "gX-Core"
     }
 
     links {
-        "glfw",
         "GL",
-        "lua",
-        "dl",
-        "gX-ThirdParty"
+        "gXtp-glad"
+        "gXtp-glfw",
+        "gXtp-stb",
+        "gXtp-glm",
     }
 
     filter "configurations:Debug"

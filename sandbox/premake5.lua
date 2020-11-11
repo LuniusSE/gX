@@ -3,8 +3,12 @@ project "gX-Sandbox"
     language "C++"
 
     dependson {
-        "gX-Core",
-        "gX-ThirdParty"
+        "gXtp-glad"
+        "gXtp-glfw",
+        "gXtp-stb",
+        "gXtp-glm",
+        "gX-Platform",
+        "gX-Core"
     }
 
     objdir "../.build/obj/%{prj.name}"
@@ -17,16 +21,17 @@ project "gX-Sandbox"
 
     includedirs {
         "../thirdparty",
+        "../thirdparty/glfw/include/",
         "../core",
         "../core/common"
     }
 
     links {
-        "glfw",
         "GL",
-        "lua",
-        "dl",
-        "gX-ThirdParty",
+        "gXtp-glad"
+        "gXtp-glfw",
+        "gXtp-stb",
+        "gXtp-glm",
         "gX-Core"
     }
 
