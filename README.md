@@ -31,13 +31,13 @@ $ chmod +x build.sh
 
 # Small TODO List
 Debugging
-    - Logging
-    - Memory Usage / Leak Detector
-    - Profiling
+ - Logging
+ - Memory Usage / Leak Detector
+ - Profiling
 System
-    - Memory Allocator
+ - Memory Allocator
 IO
-    - File IO
-        - JSON
-    - Events
-    - Event Messanger
+ - File IO
+    - JSON
+ - Events
+ - Event Messanger
