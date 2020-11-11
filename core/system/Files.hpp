@@ -26,10 +26,13 @@ struct File
 /** File Options **/
 enum class FileOptions
 {
+    None = 0,
+
     Read,
     Overwrite,
-    Append,
-    Delete,
+    ReadAppend,
+    WriteAppend,
+    Delete
 };
 
 /*! @brief Wrapper of std::filesystem::path
