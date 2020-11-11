@@ -14,7 +14,8 @@ _GX_BEGIN
 Reference<Shader> Create(const std::string& _sVertexSource, const std::string& _sFragmentSource)
 {
     /** TODO: Support GraphicsApi **/
-    return CreateRef<OpenGL::Shader>(_sVertexSource, _sFragmentSource);
+    //return CreateRef<OpenGL::Shader>(_sVertexSource, _sFragmentSource);
+    return nullptr;
 }
 
 /**
@@ -23,7 +24,8 @@ Reference<Shader> Create(const std::string& _sVertexSource, const std::string& _
 Reference<Shader> CreateFromFile(const char* _sPath)
 {
     /** TODO: Support GraphicsApi **/
-    return CreateRef<OpenGL::Shader>(_sPath);
+    //return CreateRef<OpenGL::Shader>(_sPath);
+    return nullptr;
 }
 
 _GX_END
