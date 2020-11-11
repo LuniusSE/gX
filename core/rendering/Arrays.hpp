@@ -24,8 +24,8 @@ public:
     virtual void Bind() const = 0;
     static void Reset();
 
-    virtual void AttachVertexBuffer(const Scope<VertexBuffer>& _pVertexBuffer) = 0;
-    virtual void AttachElementBuffer(const Scope<ElementBuffer>& _pElementBuffer) = 0;
+    virtual void AttachVertexBuffer(const Reference<VertexBuffer>& _pVertexBuffer) = 0;
+    virtual void AttachElementBuffer(const Reference<ElementBuffer>& _pElementBuffer) = 0;
 
     /*! @brief Create a new VertexArray Object
     **/
