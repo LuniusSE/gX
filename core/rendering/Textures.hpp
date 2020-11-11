@@ -28,7 +28,6 @@ public:
 
 /**
  * TODO:
- *  OpenGL
  *  Vulkan
  **/
 class Texture2D : Texture
