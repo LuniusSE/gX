@@ -7,6 +7,7 @@
 
 /** Headers **/
 #include <Common.hpp>
+#include "Layout.hpp"
 #include <vector>
 
 _GX_BEGIN
@@ -23,6 +24,9 @@ public:
 
     virtual void Bind() const = 0;
     static void Reset();
+
+    virtual void SetLayout(const Layout& _aLayout) = 0;
+    virtual Layout& GetLayout(void) = 0;
 
     /*! @brief Create a new VertexBuffer Object
     **/
