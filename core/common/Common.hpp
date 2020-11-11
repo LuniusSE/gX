@@ -9,6 +9,7 @@
 
 #include "Namespace.hpp"
 #include "Types.hpp"
-#include "system/Pointers.hpp"
+#include <system/Pointers.hpp>
+#include <maths/Math.hpp>
 
 #endif
