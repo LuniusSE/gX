@@ -13,6 +13,7 @@
 #include <Common.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 _GX_BEGIN
 
