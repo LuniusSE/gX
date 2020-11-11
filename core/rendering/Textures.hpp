@@ -12,7 +12,6 @@ _GX_BEGIN
 
 /**
  * TODO:
- *  OpenGL
  *  Vulkan
  **/
 class Texture

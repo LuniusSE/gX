@@ -14,7 +14,6 @@ _GX_BEGIN
 
 /**
  * TODO:
- *  OpenGL
  *  Vulkan
  **/
 class VertexBuffer
@@ -35,7 +34,6 @@ public:
 
 /**
  * TODO:
- *  OpenGL
  *  Vulkan
  **/
 class ElementBuffer
