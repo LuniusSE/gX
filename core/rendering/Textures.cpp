@@ -23,8 +23,7 @@ Reference<Texture2D> Texture2D::Create(/** Size, Data **/)
 Reference<Texture2D> Texture2D::CreateFromFile(const char* _sPath)
 {
     /** TODO: Support GraphicsApi **/
-    //return CreateRef<OpenGL::Texture2D>(_sPath);
-    return nullptr;
+    return CreateRef<OpenGL::Texture2D>(_sPath);
 }
 
 _GX_END
