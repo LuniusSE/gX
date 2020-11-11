@@ -3,7 +3,7 @@ project "gX-Core"
     language "C++"
 
     dependson {
-        "gXtp-glad"
+        "gXtp-glad",
         "gXtp-glfw",
         "gXtp-stb",
         "gXtp-glm",
@@ -25,12 +25,17 @@ project "gX-Core"
     }
 
     links {
-        "GL",
-        "gXtp-glad"
+        "gXtp-glad",
         "gXtp-glfw",
         "gXtp-stb",
-        "gXtp-glm",
+        "gXtp-glm"
     }
+
+    filter "system:linux"
+        links { "GL", "dl" }
+
+    filter "system:windows"
+        links { "opengl32" }
 
     filter "configurations:Debug"
         defines { "GX_DEBUG" }
