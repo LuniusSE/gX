@@ -7,8 +7,8 @@ project "gX-Sandbox"
         "gXtp-glfw",
         "gXtp-stb",
         "gXtp-glm",
-        "gX-Platform",
-        "gX-Core"
+        "gX-Core",
+        "gX-Platform"
     }
 
     objdir "../.build/obj/%{prj.name}"
