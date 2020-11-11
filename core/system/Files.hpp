@@ -13,8 +13,7 @@
 _GX_BEGIN
 
 /**
- * Useful file information
- *  File = ReadFile(_sPath)
+ * File data
  **/
 struct File
 {
