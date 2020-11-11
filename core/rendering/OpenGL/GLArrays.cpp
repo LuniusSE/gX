@@ -22,7 +22,7 @@ void VertexArray::VertexArray::Bind() const
     glBindVertexArray(m_Program);
 }
 
-void VertexArray::AttachVertexBuffer(const gx::Scope<gx::VertexBuffer>& _pVertexBuffer)
+void VertexArray::AttachVertexBuffer(const gx::Reference<gx::VertexBuffer>& _pVertexBuffer)
 {
     /** Bind both VAO and VBO so OpenGL can attach them. **/
     glBindVertexArray(m_Program);
@@ -32,7 +32,7 @@ void VertexArray::AttachVertexBuffer(const gx::Scope<gx::VertexBuffer>& _pVertex
     HandleVertexAttribPointers(_pVertexBuffer->GetLayout());
 }
 
-void VertexArray::AttachElementBuffer(const gx::Scope<gx::ElementBuffer>& _pElementBuffer)
+void VertexArray::AttachElementBuffer(const gx::Reference<gx::ElementBuffer>& _pElementBuffer)
 {
     /** Bind both VAO and EBO so OpenGL can attach them. **/
     glBindVertexArray(m_Program);

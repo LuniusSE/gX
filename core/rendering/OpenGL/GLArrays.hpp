@@ -23,8 +23,8 @@ public:
 
     virtual void Bind() const override;
 
-    virtual void AttachVertexBuffer(const gx::Scope<gx::VertexBuffer>& _pVertexBuffer) override;
-    virtual void AttachElementBuffer(const gx::Scope<gx::ElementBuffer>& _pElementBuffer) override;
+    virtual void AttachVertexBuffer(const gx::Reference<gx::VertexBuffer>& _pVertexBuffer) override;
+    virtual void AttachElementBuffer(const gx::Reference<gx::ElementBuffer>& _pElementBuffer) override;
 };
 
 _GX_REGION_END
