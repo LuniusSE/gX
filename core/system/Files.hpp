@@ -44,6 +44,11 @@ std::string FindPath(const char* _sPath);
 **/
 Status OpenFile(File& _fFile, FileOptions _eOptions);
 
+/*! @brief Read region of a file
+ * TODO: Impl
+**/
+Status ReadRegion(File& _fFile, std::string& _sRegion);
+
 _GX_END
 
 #endif
