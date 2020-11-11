@@ -8,6 +8,7 @@
 /** Headers **/
 #include <Common.hpp>
 #include <string>
+#include <string_view>
 
 _GX_BEGIN
 
@@ -17,8 +18,8 @@ _GX_BEGIN
  **/
 struct File
 {
-    const char* sPath;
-    char* sData;
+    std::string_view sPath;
+    std::string sData;
     int nLines;
     int nCharacters;
 };
