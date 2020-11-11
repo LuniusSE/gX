@@ -4,21 +4,16 @@
 
 /** Graphics Includes **/
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-/** Lua Includes **/
-#include <lua.hpp>
+#include <glfw/glfw3.h>
 
 /** GLM Includes **/
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-/** Other Thirdparty Includes **/
-#include <stb/stb_image.hpp>
-
 /** gX **/
 #include <rendering/Shaders.hpp>
+#include <rendering/Textures.hpp>
 #include <rendering/Arrays.hpp>
 #include <rendering/Buffers.hpp>
 #include <maths/Orthographic.hpp>
@@ -31,91 +26,6 @@
 
 /**         Debug Macros            **/
 #define DebugPrint(A, M)            printf("%s\t\t %s:%d %s\n", A, __FUNCTION__, __LINE__, M)
-
-/**         OpenGL Helpers          **/
-
-/**
- * Simple OpenGL Texture class
- **/
-class Texture
-{
-private:
-    GLuint m_TextureID;
-
-    const char* m_FilePath;
-
-    int m_Channels,
-        m_Width,
-        m_Height;
-
-    inline void __Create()
-    {
-        /** Flip **/
-        stbi_set_flip_vertically_on_load(1);
-
-        /** Load Image **/
-        stbi_uc* Image = stbi_load(m_FilePath, &m_Width, &m_Height, &m_Channels, 0);
-
-        /** Error check loading the image **/
-        if(Image == NULL)
-        {
-            DebugPrint("STBI", "Failed to load image.");
-            DebugPrint("STBI", m_FilePath);
-            DebugPrint("STBI", stbi_failure_reason());
-            return;
-        }
-
-        printf("%s %dx%d %d\n", m_FilePath, m_Width, m_Height, m_Channels);
-
-        /** Create Texture **/
-        glCreateTextures(GL_TEXTURE_2D, 1, &m_TextureID);
-        glTextureStorage2D(m_TextureID, 1, GL_RGB8, m_Width, m_Height);
-
-        /** Texture Options **/
-        glTextureParameteri(m_TextureID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTextureParameteri(m_TextureID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_S, GL_REPEAT);	
-        glTextureParameteri(m_TextureID, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-        /** Set Texture data **/
-        glTextureSubImage2D(m_TextureID, 0, 0, 0, m_Width, m_Height, GL_RGB, GL_UNSIGNED_BYTE, Image);
-
-        /** Free Texture **/
-        stbi_image_free(Image);
-    }
-
-    inline void __Destroy()
-    {
-        glDeleteTextures(1, &m_TextureID);
-    }
-
-public:
-    Texture(const char* _sFilePath)
-        : m_FilePath(_sFilePath)
-    {
-        __Create();
-    }
-
-    ~Texture()
-    {
-        __Destroy();
-    }
-
-    inline GLuint Get()
-    {
-        /** Get the OpenGL Texture ID **/
-        return m_TextureID;
-    }
-
-    inline void Bind(unsigned _uPosition = 0u)
-    {
-        /** Bind the Texture **/
-        glActiveTexture(GL_TEXTURE0 + _uPosition);
-        glBindTexture(GL_TEXTURE_2D, m_TextureID);
-    }
-
-};
 
 /** OpenGL Message Callback **/
 void OpenGLCallback
@@ -257,12 +167,11 @@ int main()
     )";
 
     {
-
         /** Create Shader **/
         gx::Reference<gx::Shader> BasicShader = gx::Shader::Create(VertS, FragS);
 
         /** Create Texture **/
-        Texture BasicTexture = Texture(gx::FindPath("sandbox/resources/Image.png").c_str());
+        gx::Reference<gx::Texture2D> BasicTexture = gx::Texture2D::CreateFromFile("sandbox/resources/Image.png");
 
         /** Orthographic **/
         gx::Orthographic Projection = gx::Orthographic({ 800, 600 }, 10.0f);
@@ -309,7 +218,7 @@ int main()
             { /** Begin **/
 
                 /** Bind Texture **/
-                BasicTexture.Bind();
+                BasicTexture->Bind(0u);
 
                 /** Bind Shader **/
                 BasicShader->Bind();
