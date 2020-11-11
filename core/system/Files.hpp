@@ -46,6 +46,12 @@ Status OpenFile(File& _fFile, FileOptions _eOptions);
 
 /*! @brief Read region of a file
  * TODO: Impl
+ * 
+ * #beginregion VertexShader
+ * ...
+ * ...
+ * #endregion
+ * 
 **/
 Status ReadRegion(File& _fFile, std::string& _sRegion);
 
