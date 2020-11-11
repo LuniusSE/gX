@@ -1,5 +1,5 @@
 /*
-// Graphics Shaders
+// Graphics Textures
 */
 
 #ifndef _GX_RENDERING_SHADERS_HEADER_
