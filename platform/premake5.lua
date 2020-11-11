@@ -2,6 +2,10 @@ project "gX-Platform"
     kind "StaticLib"
     language "C++"
 
+    dependson {
+        "gX-Core"
+    }
+
     objdir "../.build/obj/%{prj.name}"
     targetdir "../.build/%{prj.name}"
 
