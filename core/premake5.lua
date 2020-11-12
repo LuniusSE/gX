@@ -9,8 +9,8 @@ project "gX-Core"
         "gXtp-glm"
     }
 
-    objdir "../.build/obj/%{prj.name}"
-    targetdir "../.build/%{prj.name}"
+    objdir "%{wks.location}/.build/obj/%{prj.name}"
+    targetdir "%{wks.location}/.build/%{prj.name}"
 
     files {
         "**.cpp",
@@ -18,8 +18,8 @@ project "gX-Core"
     }
 
     includedirs {
-        "../thirdparty",
-        "../core",
+        "%{wks.location}/thirdparty",
+        "%{wks.location}/core",
         "common/"
     }
 

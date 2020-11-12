@@ -11,8 +11,8 @@ project "gX-Sandbox"
         "gX-Platform"
     }
 
-    objdir "../.build/obj/%{prj.name}"
-    targetdir "../.build/%{prj.name}"
+    objdir "%{wks.location}/.build/obj/%{prj.name}"
+    targetdir "%{wks.location}/.build/%{prj.name}"
 
     files {
         "**.cpp",
@@ -20,10 +20,10 @@ project "gX-Sandbox"
     }
 
     includedirs {
-        "../thirdparty",
-        "../thirdparty/glfw/include/",
-        "../core",
-        "../core/common"
+        "%{wks.location}/thirdparty",
+        "%{wks.location}/thirdparty/glfw/include/",
+        "%{wks.location}/core",
+        "%{wks.location}/core/common"
     }
 
     links {

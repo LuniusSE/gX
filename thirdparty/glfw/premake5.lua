@@ -2,8 +2,10 @@ project "gXtp-glfw"
 	kind "StaticLib"
 	language "C"
 
-    objdir "../../.build/obj/%{prj.name}"
-    targetdir "../../.build/%{prj.name}"
+    objdir "%{wks.location}/.build/obj/%{prj.name}"
+    targetdir "%{wks.location}/.build/%{prj.name}"
+
+	includedirs { "%{wks.location}/thirdparty" }
 
 	files {
 		"include/glfw/glfw3.h",

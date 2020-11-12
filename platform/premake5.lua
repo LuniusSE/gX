@@ -6,8 +6,8 @@ project "gX-Platform"
         "gX-Core"
     }
 
-    objdir "../.build/obj/%{prj.name}"
-    targetdir "../.build/%{prj.name}"
+    objdir "%{wks.location}/.build/obj/%{prj.name}"
+    targetdir "%{wks.location}/.build/%{prj.name}"
 
     files {
         "**.cpp",
