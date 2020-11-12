@@ -1,6 +1,6 @@
 workspace "gX-Workspace"
     architecture "x64"
-    startproject "gX-Core"
+    startproject "gX-Sandbox"
     cppdialect "C++17"
 
     configurations {
