@@ -9,6 +9,8 @@ project "gX-Platform"
     objdir "%{wks.location}/.build/obj/%{prj.name}"
     targetdir "%{wks.location}/.build/%{prj.name}"
 
+    includedirs { "%{wks.location}/core" };
+
     files {
         "**.cpp",
         "**.hpp"
