@@ -8,8 +8,8 @@ project "gXtp-glfw"
 	includedirs { "%{wks.location}/thirdparty" }
 
 	files {
-		"include/glfw/glfw3.h",
-		"include/glfw/glfw3native.h",
+		"glfw3.h",
+		"glfw3native.h",
 		"src/glfw_config.h",
 		"src/context.c",
 		"src/init.c",
