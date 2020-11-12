@@ -1,6 +1,6 @@
 # Compiling
 
-<h3>Linux</h3>
+### Linux
 
 ```sh
 $ ./build.sh
@@ -27,7 +27,20 @@ if you get a permission denied error
 $ chmod +x build.sh
 ```
 
-<h4>Support for other platforms isn't guaranteed yet.</h4>
+### Visual Studio
+Download [Premake5.exe](https://premake.github.io/download.html#v5)
+```sh
+> premake5 vs2019
+    Building configurations...
+    Running action 'vs2019'...
+    ...
+    ...
+    ...
+    Done (...ms).
+```
+Now you can open the solution file ***gX-Workspace.sln*** and compile
+
+#### Support for other platforms isn't guaranteed yet.
 
 # Small TODO List
  - Logging
