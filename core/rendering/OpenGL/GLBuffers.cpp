@@ -8,12 +8,18 @@ _GX_REGION_BEGIN(OpenGL)
 
 /** Begin VertexBuffer **/
 
-VertexBuffer::VertexBuffer(const std::vector<float>& _aVertices)
+VertexBuffer::VertexBuffer(gx::Size _uSize)
 {
-    /** TODO: Support GL_DYNAMIC_DRAW **/
     glCreateBuffers(1, &m_Program);
     glBindBuffer(GL_ARRAY_BUFFER, m_Program);
-    glBufferData(GL_ARRAY_BUFFER, _aVertices.size() * sizeof(float), &_aVertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, _uSize, nullptr, GL_DYNAMIC_DRAW);
+}
+
+VertexBuffer::VertexBuffer(const void* _pVertices, gx::Size _uSize)
+{
+    glCreateBuffers(1, &m_Program);
+    glBindBuffer(GL_ARRAY_BUFFER, m_Program);
+    glBufferData(GL_ARRAY_BUFFER, _uSize, _pVertices, GL_STATIC_DRAW);
 }
 
 VertexBuffer::~VertexBuffer()
