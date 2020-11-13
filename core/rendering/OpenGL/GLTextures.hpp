@@ -19,10 +19,11 @@ private:
 
     gx::uInt m_Width, m_Height, m_Channels;
 
-    // void CreateTextureFromData();
+    void CreateTextureFromData(const gx::uChar* _pData);
     void CreateTextureFromFile();
 
 public:
+    Texture2D(gx::Vec2 _vSize, const gx::uChar* _pData);
     Texture2D(const char* _sPath);
     ~Texture2D();
 
