@@ -26,6 +26,7 @@ public:
 
     virtual void SetLayout(const Layout& _aLayout) = 0;
     virtual Layout& GetLayout(void) = 0;
+    virtual void SetBufferData(const void* _pData, Size _uSize) = 0;
 
     /*! @brief Create a new VertexBuffer Object
      *
