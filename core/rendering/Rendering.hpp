@@ -21,7 +21,12 @@ public:
     /*! @brief Create a new GraphicsAPI global instance
      * Can be either a OpenGL or Vulkan instance
     **/
-    static void Initialize(const API& _eAPI);
+    static void SetAPI(const API& _eAPI);
+
+    /*! @brief Create a new GraphicsAPI global instance
+     * Can be either a OpenGL or Vulkan instance
+    **/
+    static void Initialize();
 
     /*! @brief Delete the GraphicsAPI instance
     **/
