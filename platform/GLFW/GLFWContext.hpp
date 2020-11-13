@@ -24,6 +24,7 @@ public:
 
     virtual void CreateContext() override;
     virtual void SwapBuffers() override;
+    virtual gx::Time GetTime() const override;
 
 };
 
