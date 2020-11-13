@@ -33,8 +33,8 @@ public:
 class Texture2D : public Texture
 {
 public:
-	static Reference<Texture2D> Create(/** Size, Data **/);
-	static Reference<Texture2D> CreateFromFile(const char* _sPath);
+	static Reference<Texture2D> Create(Vec2 _vSize, const uChar* _pData);
+	static Reference<Texture2D> Create(const char* _sPath);
 };
 
 _GX_END
