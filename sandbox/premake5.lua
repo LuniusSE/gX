@@ -21,7 +21,7 @@ project "gX-Sandbox"
 
     includedirs {
         "%{wks.location}/thirdparty",
-        "%{wks.location}/thirdparty/glfw/include/",
+        "%{wks.location}/platform",
         "%{wks.location}/core",
         "%{wks.location}/core/common"
     }
