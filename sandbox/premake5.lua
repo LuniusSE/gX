@@ -31,7 +31,8 @@ project "gX-Sandbox"
         "gXtp-glfw",
         "gXtp-stb",
         "gXtp-glm",
-        "gX-Core"
+        "gX-Core",
+        "gX-Platform"
     }
 
     filter "system:windows"
