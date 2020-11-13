@@ -25,6 +25,7 @@ public:
 
     virtual void SetLayout(const gx::Layout& _aLayout) override;
     virtual gx::Layout& GetLayout(void) override;
+    virtual void SetBufferData(const void* _pData, gx::Size _uSize) override;
 
 };
 
