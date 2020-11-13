@@ -26,17 +26,19 @@ struct Vertex
 
 struct Scene
 {
-	Vertex defaultQuadVertices[4];
+	uInt elementCount = 0u;
+
 	Reference<VertexArray> vertexArray;
 	Reference<VertexBuffer> _vertexBuffer;
 	Reference<ElementBuffer> _elementBuffer;
+	
+	Reference<Texture2D> defaultTexture;
 	Reference<Shader> shader;
+
 	Orthographic* projection;
 
 	Vertex* pQuadVertexBuffer;
 	Vertex* pQuadVertexBufferPtr;
-
-	uInt indicesCount = 0u;
 };
 
 static Scene s_Scene;
@@ -51,12 +53,14 @@ void Renderer2D::Initialize()
 
 	s_Scene.vertexArray = VertexArray::Create();
 
+	/** Setup VertexBuffer **/
 	s_Scene.pQuadVertexBuffer = (Vertex*)malloc(BatchedVertices * sizeof(Vertex));
-
+	
 	s_Scene._vertexBuffer = VertexBuffer::Create(BatchedVertices * sizeof(Vertex));
 	s_Scene._vertexBuffer->SetLayout({ Attribute::Float3, Attribute::Float4, Attribute::Float2 });
 	s_Scene.vertexArray->AttachVertexBuffer(s_Scene._vertexBuffer);
 
+	/** Setup ElementBuffer **/
 	std::vector<Index> pIndices = std::vector<Index>(BatchedIndices, 0u);
 
 	uInt uOffset = 0u;
@@ -76,15 +80,24 @@ void Renderer2D::Initialize()
 	s_Scene._elementBuffer = ElementBuffer::Create(pIndices);
 	s_Scene.vertexArray->AttachElementBuffer(s_Scene._elementBuffer);
 
+	/** Setup Shaders **/
+
+	/** Include BatchRenderer2D_Vertex.glsl as a RawString **/
 	std::string VertexShader =
 		#include "Shaders/BatchRenderer2D_Vertex.glsl"
 	;
 
+	/** Include BatchRenderer2D_Fragment.glsl as a RawString **/
 	std::string FragmentShader =
 		#include "Shaders/BatchRenderer2D_Fragment.glsl"
 	;
 
+	/** Create Shader **/
 	s_Scene.shader = Shader::Create(VertexShader, FragmentShader);
+
+	/** Create default White Texture **/
+	uChar whiteTextureData = 0xffffffff;
+	s_Scene.defaultTexture = Texture2D::Create({ 1, 1 }, &whiteTextureData);
 }
 
 /**
@@ -105,7 +118,7 @@ void Renderer2D::BeginScene(Orthographic& _Projection)
 {
 	s_Scene.projection = &_Projection;
 
-	s_Scene.indicesCount = 0u;
+	s_Scene.elementCount = 0u;
 	s_Scene.pQuadVertexBufferPtr = s_Scene.pQuadVertexBuffer;
 }
 
@@ -128,7 +141,7 @@ void Renderer2D::Flush()
 	s_Scene.shader->Bind();
 	s_Scene.shader->SetUniformMat4("uViewProjection", *s_Scene.projection);
 
-	Rendering::GetGraphicsAPI()->DrawIndexed(s_Scene.vertexArray, s_Scene.indicesCount);
+	Rendering::GetGraphicsAPI()->DrawIndexed(s_Scene.vertexArray, s_Scene.elementCount);
 }
 
 /**
@@ -156,7 +169,7 @@ void Renderer2D::RenderQuad(const Vec4& _vColour, const Vec3& _vSize, const Vec3
 	s_Scene.pQuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
 	s_Scene.pQuadVertexBufferPtr++;
 
-	s_Scene.indicesCount += 6u;
+	s_Scene.elementCount += 6u;
 }
 
 _GX_END
