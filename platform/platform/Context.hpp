@@ -25,6 +25,7 @@ public:
 
     virtual void CreateContext() = 0;
     virtual void SwapBuffers() = 0;
+    virtual Time GetTime() const = 0;
 
 };
 
