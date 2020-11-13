@@ -20,7 +20,7 @@ Reference<Shader> Shader::Create(const std::string& _sVertexSource, const std::s
 /**
  * Shader::CreateFromFile Implementation
 **/
-Reference<Shader> Shader::CreateFromFile(const char* _sPath)
+Reference<Shader> Shader::Create(const char* _sPath)
 {
     /** TODO: Support GraphicsApi **/
     return CreateRef<OpenGL::Shader>(_sPath);
