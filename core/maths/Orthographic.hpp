@@ -7,7 +7,7 @@
 #define _GX_MATHS_ORTHOGRAPHIC_HEADER_
 
 /** Include **/
-#include "Math.hpp"
+#include "Types.hpp"
 
 _GX_BEGIN
 
