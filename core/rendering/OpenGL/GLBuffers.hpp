@@ -18,7 +18,8 @@ private:
     gx::Layout m_Layout;
 
 public:
-    VertexBuffer(const std::vector<float>& _aVertices);
+    VertexBuffer(gx::Size _uSize);
+    VertexBuffer(const void* _pVertices, gx::Size _uSize);
     ~VertexBuffer();
 
     virtual void Bind() const override;
