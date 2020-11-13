@@ -7,9 +7,12 @@
 
 #define _GX_NS gx
 
+/** Common **/
 #include "Namespace.hpp"
 #include "Types.hpp"
-#include <system/Pointers.hpp>
+#include "Pointers.hpp"
+
+/** Maths **/
 #include <maths/Types.hpp>
 
 #endif
