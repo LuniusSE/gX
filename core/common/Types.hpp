@@ -17,6 +17,7 @@ using Float     = float;
 /** Redef **/
 using Int       = int_least32_t;
 using uInt      = uint_least32_t;
+using uChar     = uint_least8_t;
 
 /** Special Integers **/
 using Index     = uInt;
