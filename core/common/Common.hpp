@@ -10,6 +10,6 @@
 #include "Namespace.hpp"
 #include "Types.hpp"
 #include <system/Pointers.hpp>
-#include <maths/Math.hpp>
+#include <maths/Types.hpp>
 
 #endif
