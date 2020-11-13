@@ -8,11 +8,18 @@ _GX_BEGIN
 Scope<GraphicsAPI> Rendering::s_GraphicsAPI = nullptr;
 
 /**
- * Rendering::Initialize Implementation
+ * Rendering::SetAPI Implementation
 **/
-void Rendering::Initialize(const API& _eAPI)
+void Rendering::SetAPI(const API& _eAPI)
 {
     GraphicsAPI::s_API = _eAPI;
+}
+
+/**
+ * Rendering::Initialize Implementation
+**/
+void Rendering::Initialize()
+{
     s_GraphicsAPI = GraphicsAPI::Create();
 }
 
