@@ -28,4 +28,9 @@ void Context::SwapBuffers()
     glfwSwapBuffers(m_Window->m_pWindow);
 }
 
+gx::Time Context::GetTime() const
+{
+    return glfwGetTime();
+}
+
 _GX_REGION_END
