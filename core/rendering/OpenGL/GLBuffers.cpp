@@ -42,6 +42,12 @@ gx::Layout& VertexBuffer::GetLayout(void)
     return m_Layout;
 }
 
+void VertexBuffer::SetBufferData(const void* _pData, gx::Size _uSize)
+{
+    glBindBuffer(GL_ARRAY_BUFFER, m_Program);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, _uSize, _pData);
+}
+
 /** End VertexBuffer **/
 
 /** Begin ElementBuffer **/
