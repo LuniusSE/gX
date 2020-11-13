@@ -48,7 +48,6 @@ gx::Layout& VertexBuffer::GetLayout(void)
 
 ElementBuffer::ElementBuffer(const std::vector<gx::Index>& _aElements)
 {
-    /** TODO: Support GL_DYNAMIC_DRAW? **/
     glCreateBuffers(1, &m_Program);
     glBindBuffer(GL_ARRAY_BUFFER, m_Program);
     glBufferData(GL_ARRAY_BUFFER, _aElements.size() * sizeof(gx::Index), &_aElements[0], GL_STATIC_DRAW); 
