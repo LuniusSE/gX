@@ -7,7 +7,7 @@
 
 /** Headers **/
 #include <Common.hpp>
-#include <maths/Math.hpp>
+#include <maths/Types.hpp>
 
 _GX_BEGIN
 
