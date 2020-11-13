@@ -41,7 +41,7 @@ public:
 
     /*! @brief Create a new Shader from a file
     **/
-    static Reference<Shader> CreateFromFile(const char* _sPath);
+    static Reference<Shader> Create(const char* _sPath);
 };
 
 _GX_END
