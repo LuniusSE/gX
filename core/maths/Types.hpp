@@ -2,7 +2,6 @@
  * Include essential glm headers
  **/
 
-/** core/maths/Math.hpp Gaurd Block **/
 #ifndef _GX_MATHS_HEADER_
 #define _GX_MATHS_HEADER_
 
