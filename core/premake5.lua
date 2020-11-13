@@ -20,7 +20,7 @@ project "gX-Core"
     includedirs {
         "%{wks.location}/thirdparty",
         "%{wks.location}/core",
-        "common/"
+        "%{wks.location}/core/common"
     }
 
     links {
