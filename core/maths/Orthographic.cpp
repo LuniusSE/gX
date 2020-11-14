@@ -43,6 +43,7 @@ void Orthographic::Update(void)
 void Orthographic::Translate(const Vec3& _vTranslation)
 {
     m_Position += _vTranslation;
+    TranslateOrigin(_vTranslation);
 }
 
 void Orthographic::TranslateOrigin(const Vec3& _vTranslation)
