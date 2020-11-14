@@ -14,6 +14,8 @@ workspace "gX-Workspace"
     }
 
 include "thirdparty"
+
+group ""
 include "platform"
 include "core"
 include "sandbox"
