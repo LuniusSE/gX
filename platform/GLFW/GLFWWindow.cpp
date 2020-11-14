@@ -3,6 +3,7 @@
 */
 #include "GLFWWindow.hpp"
 #include "GLFWContext.hpp"
+#include "GLFWEvents.hpp"
 
 _GX_REGION_BEGIN(GLFW)
 
@@ -17,6 +18,9 @@ Window::Window(const std::string& _sTitle, gx::uInt _uWidth, gx::uInt _uHeight)
         printf("[TEMP] GLFW\n%s\n", "Failed to create GLFWwindow");
     }
 
+    glfwSetWindowUserPointer(m_pWindow, &m_Handler);
+    glfwSetKeyCallback(m_pWindow, GLFW_KeyEvent);
+
     m_pContext->CreateContext();
 }
 
@@ -28,6 +32,11 @@ Window::~Window()
 bool Window::IsOpen() const
 {
     return (glfwWindowShouldClose(m_pWindow) == 0);
+}
+
+void Window::SetEventHandler(const gx::EventHandlerFn& _fnHandler)
+{
+    m_Handler = _fnHandler;
 }
 
 void Window::Update()
