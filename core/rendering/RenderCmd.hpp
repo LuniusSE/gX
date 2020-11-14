@@ -2,8 +2,8 @@
 // Graphics Rendering
 */
 
-#ifndef _GX_RENDERING_HEADER_
-#define _GX_RENDERING_HEADER_
+#ifndef _GX_RENDERING_RENDERCMD_
+#define _GX_RENDERING_RENDERCMD_
 
 /** Headers **/
 #include <Common.hpp>
@@ -11,7 +11,7 @@
 
 _GX_BEGIN
 
-class Rendering
+class RenderCmd
 {
 private:
     static Scope<GraphicsAPI> s_GraphicsAPI;
