@@ -91,6 +91,11 @@ void Texture2D::Bind(gx::Index _iPos) const
     glBindTexture(GL_TEXTURE_2D, m_Program);
 }
 
+gx::Program Texture2D::GetProgram() const
+{
+    return m_Program;
+}
+
 gx::uInt Texture2D::GetWidth() const
 {
     return m_Width;

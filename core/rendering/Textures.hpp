@@ -22,8 +22,10 @@ public:
     virtual void Bind(Index _iPos = 0u) const = 0; 
     static void Reset();
 
+	virtual Program GetProgram() const = 0;
 	virtual uInt GetWidth() const = 0;
 	virtual uInt GetHeight() const = 0;
+
 };
 
 /**

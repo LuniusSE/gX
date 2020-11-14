@@ -29,6 +29,7 @@ public:
 
     virtual void Bind(gx::Index _iPos = 0u) const override; 
 
+	virtual gx::Program GetProgram() const override;
 	virtual gx::uInt GetWidth() const override;
 	virtual gx::uInt GetHeight() const override;
 
