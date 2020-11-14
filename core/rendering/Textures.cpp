@@ -11,7 +11,7 @@ _GX_BEGIN
 /**
  * Texture2D::Create Implementation
 **/
-Reference<Texture2D> Texture2D::Create(Vec2 _vSize, const uChar* _pData)
+Reference<Texture2D> Texture2D::Create(Vec2 _vSize, const void* _pData)
 {
     /** TODO: Support GraphicsApi **/
     return CreateRef<OpenGL::Texture2D>(_vSize, _pData);

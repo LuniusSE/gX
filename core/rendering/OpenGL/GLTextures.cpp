@@ -9,7 +9,7 @@
 
 _GX_REGION_BEGIN(OpenGL)
 
-Texture2D::Texture2D(gx::Vec2 _vSize, const gx::uChar* _pData)
+Texture2D::Texture2D(gx::Vec2 _vSize, const void* _pData)
     : m_Width(_vSize.x), m_Height(_vSize.y)
 {
     CreateTextureFromData(_pData);
@@ -26,7 +26,7 @@ Texture2D::~Texture2D()
     glDeleteTextures(1, &m_Program);
 }
 
-void Texture2D::CreateTextureFromData(const gx::uChar* _pData)
+void Texture2D::CreateTextureFromData(const void* _pData)
 {
     /** Create Texture **/
     glCreateTextures(GL_TEXTURE_2D, 1, &m_Program);
