@@ -2,8 +2,8 @@
 // Platform Window
 */
 
-#ifndef _GX_PLATFORM_WINDOW_HEADER_
-#define _GX_PLATFORM_WINDOW_HEADER_
+#ifndef _GX_PLATFORM_WINDOW_
+#define _GX_PLATFORM_WINDOW_
 
 /** Headers **/
 #include <Common.hpp>

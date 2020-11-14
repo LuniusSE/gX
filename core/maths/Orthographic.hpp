@@ -2,9 +2,8 @@
 // Orthographic Projection
 */
 
-/** core/maths/Orthographic.hpp Gaurd Block **/
-#ifndef _GX_MATHS_ORTHOGRAPHIC_HEADER_
-#define _GX_MATHS_ORTHOGRAPHIC_HEADER_
+#ifndef _GX_MATHS_ORTHOGRAPHIC_
+#define _GX_MATHS_ORTHOGRAPHIC_
 
 /** Include **/
 #include "Types.hpp"

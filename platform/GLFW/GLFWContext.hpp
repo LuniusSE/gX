@@ -2,8 +2,8 @@
 // GLFW Context
 */
 
-#ifndef _GX_PLATFORM_GLFW_CONTEXT_HEADER_
-#define _GX_PLATFORM_GLFW_CONTEXT_HEADER_
+#ifndef _GX_PLATFORM_GLFWCONTEXT_
+#define _GX_PLATFORM_GLFWCONTEXT_
 
 /** Headers **/
 #include <Common.hpp>

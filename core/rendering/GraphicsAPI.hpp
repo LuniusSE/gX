@@ -2,8 +2,8 @@
 // Graphics API
 */
 
-#ifndef _GX_RENDERING_API_HEADER_
-#define _GX_RENDERING_API_HEADER_
+#ifndef _GX_RENDERING_API_
+#define _GX_RENDERING_API_
 
 /** Headers **/
 #include <Common.hpp>

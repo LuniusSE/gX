@@ -2,8 +2,8 @@
 // OpenGL Buffers
 */
 
-#ifndef _GX_RENDERING_GLBUFFERS_HEADER_
-#define _GX_RENDERING_GLBUFFERS_HEADER_
+#ifndef _GX_RENDERING_GLBUFFERS_
+#define _GX_RENDERING_GLBUFFERS_
 
 /** Headers **/
 #include <rendering/Buffers.hpp>

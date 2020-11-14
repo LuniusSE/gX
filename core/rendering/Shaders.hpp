@@ -2,8 +2,8 @@
 // Graphics Shaders
 */
 
-#ifndef _GX_RENDERING_SHADERS_HEADER_
-#define _GX_RENDERING_SHADERS_HEADER_
+#ifndef _GX_RENDERING_SHADERS_
+#define _GX_RENDERING_SHADERS_
 
 /** Headers **/
 #include <Common.hpp>

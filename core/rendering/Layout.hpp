@@ -2,8 +2,8 @@
 // Graphics Shader Layout
 */
 
-#ifndef _GX_RENDERING_LAYOUT_HEADER_
-#define _GX_RENDERING_LAYOUT_HEADER_
+#ifndef _GX_RENDERING_LAYOUT_
+#define _GX_RENDERING_LAYOUT_
 
 /** Headers **/
 #include <Common.hpp>

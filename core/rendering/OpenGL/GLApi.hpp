@@ -2,8 +2,8 @@
 // OpenGL GraphicsAPI
 */
 
-#ifndef _GX_RENDERING_GLAPI_HEADER_
-#define _GX_RENDERING_GLAPI_HEADER_
+#ifndef _GX_RENDERING_GLAPI_
+#define _GX_RENDERING_GLAPI_
 
 /** Headers **/
 #include <Common.hpp>

@@ -2,8 +2,8 @@
 // GLFW Window
 */
 
-#ifndef _GX_PLATFORM_GLFW_WINDOW_HEADER_
-#define _GX_PLATFORM_GLFW_WINDOW_HEADER_
+#ifndef _GX_PLATFORM_GLFWWINDOW_
+#define _GX_PLATFORM_GLFWWINDOW_
 
 /** Headers **/
 #include <Common.hpp>

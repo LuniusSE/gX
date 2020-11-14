@@ -2,8 +2,8 @@
 // Graphics Arrays
 */
 
-#ifndef _GX_RENDERING_ARRAYS_HEADER_
-#define _GX_RENDERING_ARRAYS_HEADER_
+#ifndef _GX_RENDERING_ARRAYS_
+#define _GX_RENDERING_ARRAYS_
 
 /** Headers **/
 #include <Common.hpp>

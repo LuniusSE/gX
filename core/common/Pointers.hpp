@@ -2,8 +2,8 @@
 // Pointers
 */
 
-#ifndef _GX_COMMON_POINTERS_HEADER_
-#define _GX_COMMON_POINTERS_HEADER_
+#ifndef _GX_COMMON_POINTERS_
+#define _GX_COMMON_POINTERS_
 
 /** Headers **/
 #include "Common.hpp"

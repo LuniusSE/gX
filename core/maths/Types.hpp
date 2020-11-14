@@ -2,8 +2,8 @@
  * Include essential glm headers
  **/
 
-#ifndef _GX_MATHS_HEADER_
-#define _GX_MATHS_HEADER_
+#ifndef _GX_MATHS_
+#define _GX_MATHS_
 
 /** GLM Precision **/
 #define DefaultPrecision glm::lowp

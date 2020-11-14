@@ -2,8 +2,8 @@
 // OpenGL Textures
 */
 
-#ifndef _GX_RENDERING_GLTEXTURES_HEADER_
-#define _GX_RENDERING_GLTEXTURES_HEADER_
+#ifndef _GX_RENDERING_GLTEXTURES_
+#define _GX_RENDERING_GLTEXTURES_
 
 /** Headers **/
 #include <rendering/Textures.hpp>

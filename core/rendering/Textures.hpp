@@ -2,8 +2,8 @@
 // Graphics Textures
 */
 
-#ifndef _GX_RENDERING_TEXTURESS_HEADER_
-#define _GX_RENDERING_TEXTURESS_HEADER_
+#ifndef _GX_RENDERING_TEXTURESS_
+#define _GX_RENDERING_TEXTURESS_
 
 /** Headers **/
 #include <Common.hpp>

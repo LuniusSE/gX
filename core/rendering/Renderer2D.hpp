@@ -2,8 +2,8 @@
 // 2D Renderer
 */
 
-#ifndef _GX_RENDERING_RENDERER2D_HEADER_
-#define _GX_RENDERING_RENDERER2D_HEADER_
+#ifndef _GX_RENDERING_RENDERER2D_
+#define _GX_RENDERING_RENDERER2D_
 
 /** Headers **/
 #include <Common.hpp>

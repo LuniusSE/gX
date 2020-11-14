@@ -2,8 +2,8 @@
 // Platform Context
 */
 
-#ifndef _GX_PLATFORM_CONTEXT_HEADER_
-#define _GX_PLATFORM_CONTEXT_HEADER_
+#ifndef _GX_PLATFORM_CONTEXT_
+#define _GX_PLATFORM_CONTEXT_
 
 /** Headers **/
 #include <Common.hpp>

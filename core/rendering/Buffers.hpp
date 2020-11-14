@@ -2,8 +2,8 @@
 // Graphics Buffers
 */
 
-#ifndef _GX_RENDERING_BUFFERS_HEADER_
-#define _GX_RENDERING_BUFFERS_HEADER_
+#ifndef _GX_RENDERING_BUFFERS_
+#define _GX_RENDERING_BUFFERS_
 
 /** Headers **/
 #include <Common.hpp>

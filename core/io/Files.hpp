@@ -2,8 +2,8 @@
 // Files
 */
 
-#ifndef _GX_IO_FILES_HEADER_
-#define _GX_IO_FILES_HEADER_
+#ifndef _GX_IO_FILES_
+#define _GX_IO_FILES_
 
 /** Headers **/
 #include <Common.hpp>

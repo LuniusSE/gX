@@ -2,8 +2,8 @@
 // OpenGL Arrays
 */
 
-#ifndef _GX_RENDERING_GLARRAYS_HEADER_
-#define _GX_RENDERING_GLARRAYS_HEADER_
+#ifndef _GX_RENDERING_GLARRAYS_
+#define _GX_RENDERING_GLARRAYS_
 
 /** Headers **/
 #include <Common.hpp>

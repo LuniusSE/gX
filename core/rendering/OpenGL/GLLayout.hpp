@@ -2,8 +2,8 @@
 // OpenGL Layout
 */
 
-#ifndef _GX_RENDERING_GLLAYOUT_HEADER_
-#define _GX_RENDERING_GLLAYOUT_HEADER_
+#ifndef _GX_RENDERING_GLLAYOUT_
+#define _GX_RENDERING_GLLAYOUT_
 
 /** Headers **/
 #include <Common.hpp>
