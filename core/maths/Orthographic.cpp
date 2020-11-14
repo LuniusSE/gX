@@ -21,8 +21,6 @@ Orthographic::~Orthographic()
 {
 }
 
-/*! __ResetOrthographic Implementation
-**/
 void Orthographic::__ResetOrthographic(void)
 {
 	float Left      = -m_Scale * m_AspectRatio * 0.5f;
@@ -37,59 +35,42 @@ void Orthographic::__ResetOrthographic(void)
     m_View = glm::lookAt(m_Position, m_Origin, Vec3(0.0f, 1.0f, 0.0f));
 }
 
-
-/*! Update Implementation
-**/
 void Orthographic::Update(void)
 {
     __ResetOrthographic();
 }
 
-/*! Translate Implementation
-**/
 void Orthographic::Translate(const Vec3& _vTranslation)
 {
     m_Position += _vTranslation;
 }
 
-/*! TranslateOrigin Implementation
-**/
 void Orthographic::TranslateOrigin(const Vec3& _vTranslation)
 {
     m_Origin += _vTranslation;
 }
 
-/*! Resize Implementation
-**/
 void Orthographic::Resize(const Vec2& _vSize)
 {
     m_AspectRatio = _vSize.x / _vSize.y;
     m_Size = _vSize;
 }
 
-/*! SetScale Implementation
-**/
 void Orthographic::SetScale(float _fScale)
 {
     m_Scale = _fScale;
 }
 
-/*! SetPosition Implementation
-**/
 void Orthographic::SetPosition(const Vec3& _vPosition)
 {
     m_Position = _vPosition;
 }
 
-/*! SetOrigin Implementation
-**/
 void Orthographic::SetOrigin(const Vec3& _vPosition)
 {
     m_Origin = _vPosition;
 }
 
-/*! GetViewProjection Implementation
-**/
 Mat4 Orthographic::GetViewProjection(void)
 {
     return m_Projection * m_View;
