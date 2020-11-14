@@ -21,6 +21,7 @@ private:
     GLFWwindow* m_pWindow;
     gx::Scope<gx::Platform::Context> m_pContext;
     gx::uInt m_Width, m_Height;
+    gx::EventHandlerFn m_Handler;
 
 public:
     Window(const std::string& _sTitle, gx::uInt _uWidth, gx::uInt _uHeight);
@@ -28,6 +29,8 @@ public:
 
     virtual bool IsOpen() const override;
 
+    virtual void SetEventHandler(const gx::EventHandlerFn& _fnHandler) override;
+    
     virtual gx::uInt GetWidth() const override;
     virtual gx::uInt GetHeight() const override;
     virtual gx::Platform::Context* GetContext() const override;
