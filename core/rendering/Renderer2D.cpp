@@ -2,7 +2,7 @@
 // 2D Renderer
 */
 #include "Renderer2D.hpp"
-#include "Rendering.hpp"
+#include "RenderCmd.hpp"
 #include "Arrays.hpp"
 #include "Buffers.hpp"
 #include "Shaders.hpp"
@@ -11,34 +11,53 @@
 #include <vector>
 #include <string>
 
+#include <iostream>
+#include <iterator>
+#include <unordered_map>
+
 _GX_BEGIN
 
-constexpr uInt BatchedQuads 	= 5000;
-constexpr uInt BatchedVertices 	= BatchedQuads * 4;
-constexpr uInt BatchedIndices 	= BatchedQuads * 6;
+constexpr uInt BatchedQuads     = 5000u;
+constexpr uInt BatchedVertices  = BatchedQuads * 4u;
+constexpr uInt BatchedIndices   = BatchedQuads * 6u;
+
+constexpr uInt MaxTextures      = 32u;
+constexpr uInt ReservedTextures = 1u;
+
+/**
+ * Reserved Textures
+ * 	0u - Default White Texture
+ **/
 
 struct Vertex
 {
     Vec3 Position;
-	Vec4 Tint;
-	Vec2 TexCoord;
+    Vec4 Tint;
+    Vec2 TexCoord;
+    Vec2 Tiling;
+    float TextureId;
 };
 
 struct Scene
 {
-	uInt elementCount = 0u;
+    uInt elementCount = 0u;
 
-	Reference<VertexArray> vertexArray;
-	Reference<VertexBuffer> _vertexBuffer;
-	Reference<ElementBuffer> _elementBuffer;
-	
-	Reference<Texture2D> defaultTexture;
-	Reference<Shader> shader;
+    Reference<VertexArray> vertexArray;
+    Reference<VertexBuffer> _vertexBuffer;
+    Reference<ElementBuffer> _elementBuffer;
+    
+    Reference<Texture2D> defaultTexture;
+    Reference<Shader> shader;
 
-	Orthographic* projection;
+    Orthographic* projection;
 
-	Vertex* pQuadVertexBuffer;
-	Vertex* pQuadVertexBufferPtr;
+    Vec4 defaultQuadVertices[4];
+    Vertex* pQuadVertexBuffer;
+    Vertex* pQuadVertexBufferPtr;
+
+    int textureUniformSamplers[MaxTextures];
+    Reference<Texture2D> textureSlots[MaxTextures];
+    uInt textureIndex = ReservedTextures;
 };
 
 static Scene s_Scene;
@@ -48,56 +67,74 @@ static Scene s_Scene;
 **/
 void Renderer2D::Initialize()
 {
-	s_Scene.pQuadVertexBuffer = nullptr;
-	s_Scene.pQuadVertexBufferPtr = nullptr;
+    s_Scene.pQuadVertexBuffer = nullptr;
+    s_Scene.pQuadVertexBufferPtr = nullptr;
 
-	s_Scene.vertexArray = VertexArray::Create();
+    for (int i = 0; i < MaxTextures; i++)
+        s_Scene.textureUniformSamplers[i] = i;
 
-	/** Setup VertexBuffer **/
-	s_Scene.pQuadVertexBuffer = (Vertex*)malloc(BatchedVertices * sizeof(Vertex));
-	
-	s_Scene._vertexBuffer = VertexBuffer::Create(BatchedVertices * sizeof(Vertex));
-	s_Scene._vertexBuffer->SetLayout({ Attribute::Float3, Attribute::Float4, Attribute::Float2 });
-	s_Scene.vertexArray->AttachVertexBuffer(s_Scene._vertexBuffer);
+    s_Scene.defaultQuadVertices[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
+    s_Scene.defaultQuadVertices[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
+    s_Scene.defaultQuadVertices[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
+    s_Scene.defaultQuadVertices[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
 
-	/** Setup ElementBuffer **/
-	std::vector<Index> pIndices = std::vector<Index>(BatchedIndices, 0u);
 
-	uInt uOffset = 0u;
-	for (uInt i = 0; i < BatchedIndices; i += 6)
-	{
-		pIndices[i + 0u] = uOffset + 0u;
-		pIndices[i + 1u] = uOffset + 1u;
-		pIndices[i + 2u] = uOffset + 2u;
+    s_Scene.vertexArray = VertexArray::Create();
 
-		pIndices[i + 3u] = uOffset + 2u;
-		pIndices[i + 4u] = uOffset + 3u;
-		pIndices[i + 5u] = uOffset + 0u;
+    /** Setup VertexBuffer **/
+    s_Scene.pQuadVertexBuffer = (Vertex*)malloc(BatchedVertices * sizeof(Vertex));
+    
+    s_Scene._vertexBuffer = VertexBuffer::Create(BatchedVertices * sizeof(Vertex));
+    s_Scene._vertexBuffer->SetLayout({
+        Attribute::Float3, 
+        Attribute::Float4, 
+        Attribute::Float2, 
+        Attribute::Float2, 
+        Attribute::Float
+    });
+    s_Scene.vertexArray->AttachVertexBuffer(s_Scene._vertexBuffer);
 
-		uOffset += 4u;
-	}
+    /** Setup ElementBuffer **/
+    std::vector<Index> pIndices = std::vector<Index>(BatchedIndices, 0u);
 
-	s_Scene._elementBuffer = ElementBuffer::Create(pIndices);
-	s_Scene.vertexArray->AttachElementBuffer(s_Scene._elementBuffer);
+    uInt uOffset = 0u;
+    for (uInt i = 0; i < BatchedIndices; i += 6)
+    {
+        pIndices[i + 0u] = uOffset + 0u;
+        pIndices[i + 1u] = uOffset + 1u;
+        pIndices[i + 2u] = uOffset + 2u;
 
-	/** Setup Shaders **/
+        pIndices[i + 3u] = uOffset + 2u;
+        pIndices[i + 4u] = uOffset + 3u;
+        pIndices[i + 5u] = uOffset + 0u;
 
-	/** Include BatchRenderer2D_Vertex.glsl as a RawString **/
-	std::string VertexShader =
-		#include "Shaders/BatchRenderer2D_Vertex.glsl"
-	;
+        uOffset += 4u;
+    }
 
-	/** Include BatchRenderer2D_Fragment.glsl as a RawString **/
-	std::string FragmentShader =
-		#include "Shaders/BatchRenderer2D_Fragment.glsl"
-	;
+    s_Scene._elementBuffer = ElementBuffer::Create(pIndices);
+    s_Scene.vertexArray->AttachElementBuffer(s_Scene._elementBuffer);
 
-	/** Create Shader **/
-	s_Scene.shader = Shader::Create(VertexShader, FragmentShader);
+    /** Setup Shaders **/
 
-	/** Create default White Texture **/
-	uChar whiteTextureData = 0xffffffff;
-	s_Scene.defaultTexture = Texture2D::Create({ 1, 1 }, &whiteTextureData);
+    /** Include BatchRenderer2D_Vertex.glsl as a RawString **/
+    std::string VertexShader =
+        #include "Shaders/BatchRenderer2D_Vertex.glsl"
+    ;
+
+    /** Include BatchRenderer2D_Fragment.glsl as a RawString **/
+    std::string FragmentShader =
+        #include "Shaders/BatchRenderer2D_Fragment.glsl"
+    ;
+
+    /** Create Shader **/
+    s_Scene.shader = Shader::Create(VertexShader, FragmentShader);
+
+    /** Create default White Texture **/
+    uInt whiteTextureData = 0xffffffff;
+    s_Scene.defaultTexture = Texture2D::Create({ 1, 1 }, &whiteTextureData);
+
+    /** Set reserves **/
+    s_Scene.textureSlots[0] = s_Scene.defaultTexture;
 }
 
 /**
@@ -105,10 +142,30 @@ void Renderer2D::Initialize()
 **/
 void Renderer2D::Shutdown()
 {
-	free(s_Scene.pQuadVertexBuffer);
+    free(s_Scene.pQuadVertexBuffer);
 
-	s_Scene.pQuadVertexBuffer = nullptr;
-	s_Scene.pQuadVertexBufferPtr = nullptr;
+    s_Scene.pQuadVertexBuffer = nullptr;
+    s_Scene.pQuadVertexBufferPtr = nullptr;
+}
+
+/**
+ * Renderer2D::StatBatch Implementation
+**/
+void Renderer2D::StartBatch()
+{
+    s_Scene.textureIndex = ReservedTextures;
+
+    s_Scene.elementCount = 0u;
+    s_Scene.pQuadVertexBufferPtr = s_Scene.pQuadVertexBuffer;
+}
+
+/**
+ * Renderer2D::NextBatch Implementation
+**/
+void Renderer2D::NextBatch()
+{
+    Flush();
+    StartBatch();
 }
 
 /**
@@ -116,10 +173,9 @@ void Renderer2D::Shutdown()
 **/
 void Renderer2D::BeginScene(Orthographic& _Projection)
 {
-	s_Scene.projection = &_Projection;
+    s_Scene.projection = &_Projection;
 
-	s_Scene.elementCount = 0u;
-	s_Scene.pQuadVertexBufferPtr = s_Scene.pQuadVertexBuffer;
+    StartBatch();
 }
 
 /**
@@ -127,10 +183,10 @@ void Renderer2D::BeginScene(Orthographic& _Projection)
 **/
 void Renderer2D::EndScene()
 {
-	Size BufferUsageSize = ((uChar*)s_Scene.pQuadVertexBufferPtr - (uChar*)s_Scene.pQuadVertexBuffer);
-	s_Scene._vertexBuffer->SetBufferData(s_Scene.pQuadVertexBuffer, BufferUsageSize);
-	
-	Flush();
+    Size BufferUsageSize = ((uChar*)s_Scene.pQuadVertexBufferPtr - (uChar*)s_Scene.pQuadVertexBuffer);
+    s_Scene._vertexBuffer->SetBufferData(s_Scene.pQuadVertexBuffer, BufferUsageSize);
+    
+    Flush();
 }
 
 /**
@@ -138,38 +194,84 @@ void Renderer2D::EndScene()
 **/
 void Renderer2D::Flush()
 {
-	s_Scene.shader->Bind();
-	s_Scene.shader->SetUniformMat4("uViewProjection", *s_Scene.projection);
+    if (s_Scene.elementCount == 0u)
+        return;
 
-	Rendering::GetGraphicsAPI()->DrawIndexed(s_Scene.vertexArray, s_Scene.elementCount);
+    s_Scene.shader->Bind();
+    s_Scene.shader->SetUniformIntArray("uTextures", 32, s_Scene.textureUniformSamplers);
+    s_Scene.shader->SetUniformMat4("uViewProjection", *s_Scene.projection);
+
+    for (uInt i = 0; i < s_Scene.textureIndex; i++)
+    {
+        s_Scene.textureSlots[i]->Bind(i);
+    }
+
+    RenderCmd::GetGraphicsAPI()->DrawIndexed(s_Scene.vertexArray, s_Scene.elementCount);
+}
+
+/**
+ * Renderer2D::BuildQuad Implementation
+**/
+void Renderer2D::BuildQuad(const Mat4& Transform, const Vec2& _vTiling, const Vec4& _vColour, const Int& _nTextureIndex)
+{
+    if(s_Scene.elementCount >= BatchedIndices)
+        NextBatch();
+
+    s_Scene.pQuadVertexBufferPtr->Position = Transform * s_Scene.defaultQuadVertices[0];
+    s_Scene.pQuadVertexBufferPtr->Tint = _vColour;
+    s_Scene.pQuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
+    s_Scene.pQuadVertexBufferPtr->Tiling = _vTiling;
+    s_Scene.pQuadVertexBufferPtr->TextureId = _nTextureIndex;
+    s_Scene.pQuadVertexBufferPtr++;
+
+    s_Scene.pQuadVertexBufferPtr->Position = Transform * s_Scene.defaultQuadVertices[1];
+    s_Scene.pQuadVertexBufferPtr->Tint = _vColour;
+    s_Scene.pQuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
+    s_Scene.pQuadVertexBufferPtr->Tiling = _vTiling;
+    s_Scene.pQuadVertexBufferPtr->TextureId = _nTextureIndex;
+    s_Scene.pQuadVertexBufferPtr++;
+
+    s_Scene.pQuadVertexBufferPtr->Position = Transform * s_Scene.defaultQuadVertices[2];
+    s_Scene.pQuadVertexBufferPtr->Tint = _vColour;
+    s_Scene.pQuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
+    s_Scene.pQuadVertexBufferPtr->Tiling = _vTiling;
+    s_Scene.pQuadVertexBufferPtr->TextureId = _nTextureIndex;
+    s_Scene.pQuadVertexBufferPtr++;
+
+    s_Scene.pQuadVertexBufferPtr->Position = Transform * s_Scene.defaultQuadVertices[3];
+    s_Scene.pQuadVertexBufferPtr->Tint = _vColour;
+    s_Scene.pQuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
+    s_Scene.pQuadVertexBufferPtr->Tiling = _vTiling;
+    s_Scene.pQuadVertexBufferPtr->TextureId = _nTextureIndex;
+    s_Scene.pQuadVertexBufferPtr++;
+
+    s_Scene.elementCount += 6u;
 }
 
 /**
  * Renderer2D::RenderQuad Implementation
 **/
-void Renderer2D::RenderQuad(const Vec4& _vColour, const Vec3& _vSize, const Vec3& _vPosition)
+void Renderer2D::RenderQuad(const Mat4& _mTransform, const Vec2& _vTiling, const Vec4& _vColour, Reference<Texture2D>& _pTexture)
 {
-	s_Scene.pQuadVertexBufferPtr->Position = _vPosition;
-	s_Scene.pQuadVertexBufferPtr->Tint = _vColour;
-	s_Scene.pQuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
-	s_Scene.pQuadVertexBufferPtr++;
+    Int textureIndex = 0;
 
-	s_Scene.pQuadVertexBufferPtr->Position = { _vPosition.x + _vSize.x, _vPosition.y, 0.f };
-	s_Scene.pQuadVertexBufferPtr->Tint = _vColour;
-	s_Scene.pQuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
-	s_Scene.pQuadVertexBufferPtr++;
+    for (Int i = 0; i < s_Scene.textureIndex; i++)
+    {
+        if (s_Scene.textureSlots[i]->GetProgram() == _pTexture->GetProgram())
+        {
+            textureIndex = i;
+            break;
+        }
+    }
 
-	s_Scene.pQuadVertexBufferPtr->Position = { _vPosition.x + _vSize.x, _vPosition.y + _vSize.y, 0.f };
-	s_Scene.pQuadVertexBufferPtr->Tint = _vColour;
-	s_Scene.pQuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
-	s_Scene.pQuadVertexBufferPtr++;
+    if (textureIndex == 0)
+    {
+        textureIndex = s_Scene.textureIndex;
+        s_Scene.textureSlots[textureIndex] = _pTexture;
+        s_Scene.textureIndex++;
+    }
 
-	s_Scene.pQuadVertexBufferPtr->Position = { _vPosition.x, _vPosition.y + _vSize.y, 0.f };
-	s_Scene.pQuadVertexBufferPtr->Tint = _vColour;
-	s_Scene.pQuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
-	s_Scene.pQuadVertexBufferPtr++;
-
-	s_Scene.elementCount += 6u;
+    BuildQuad(_mTransform, _vTiling, _vColour, textureIndex);
 }
 
 _GX_END
