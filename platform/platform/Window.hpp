@@ -26,6 +26,8 @@ public:
 
     virtual bool IsOpen() const = 0;
 
+    virtual void SetEventHandler(const gx::EventHandlerFn& _fnHandler) = 0;
+
     virtual uInt GetWidth() const = 0;
     virtual uInt GetHeight() const = 0;
     virtual Context* GetContext() const = 0;
