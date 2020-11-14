@@ -9,18 +9,47 @@
 #include <maths/Orthographic.hpp>
 #include <maths/Transform.hpp>
 
+#include <glfw/glfw3.h>
+
 _GX_USE
+
+Orthographic Projection = Orthographic({ 800, 600 }, 10.0f);
+
+static bool OnKeyPressed(KeyPressedEvent& _Event)
+{
+    if(_Event.GetKey() == GLFW_KEY_W)
+        Projection.Translate({ 0.0f, 1.0f, 0.0f });
+    
+    else if(_Event.GetKey() == GLFW_KEY_A)
+        Projection.Translate({ -1.0f, 0.0f, 0.0f });
+
+    else if(_Event.GetKey() == GLFW_KEY_S)
+        Projection.Translate({ 0.0f, -1.0f, 0.0f });
+
+    else if(_Event.GetKey() == GLFW_KEY_D)
+        Projection.Translate({ 1.0f, 0.0f, 0.0f });
+
+    Projection.Update();
+
+    return true;
+}
+
+static void OnEvent(Event& _Event)
+{
+    EventMessanger messanger(_Event);
+    messanger.Register<KeyPressedEvent>(OnKeyPressed);
+}
 
 int main()
 {
     RenderCmd::SetAPI(API::OpenGL);
     Scope<Platform::Window> window = Platform::Window::Create("gX-Sandbox", 800, 600);
+    window->SetEventHandler(OnEvent);
 
     {
         RenderCmd::Initialize();
         Renderer2D::Initialize();
 
-        Orthographic Projection = Orthographic({ 800, 600 }, 10.0f);
         Reference<Texture2D> KazakhstaniFlag = Texture2D::Create("sandbox/resources/Image.png");
 
         Transform Flag  = Transform({ 0.0f, 2.5f, 0.0f }, { 12.0f, 5.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
