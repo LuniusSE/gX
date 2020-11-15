@@ -17,10 +17,7 @@ private:
     float m_DeltaTime;
 
 public:
-    inline Timestep()
-        : m_DeltaTime(0.0f), m_LastTime(0.0f)
-    {
-    }
+    inline Timestep() : m_DeltaTime(0.0f), m_LastTime(0.0f) {}
 
     inline void Update(float _ThisTime)
     { 
@@ -28,10 +25,11 @@ public:
         m_LastTime = _ThisTime;
     }
 
+    inline float GetSeconds() const 
+    { return m_DeltaTime; }
+
     inline operator float() const
-    {
-        return m_DeltaTime;
-    }
+    { return m_DeltaTime; }
 
 };
 
