@@ -116,7 +116,7 @@ public:
     inline MouseScrollEvent(const float& _Scroll)
         : m_Scroll(_Scroll) {}
 
-    inline uInt GetScroll() const 
+    inline float GetScroll() const 
     { return m_Scroll; }
 
     inline virtual uInt GetEventClass() const override
