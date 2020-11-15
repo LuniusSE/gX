@@ -20,6 +20,10 @@ Window::Window(const std::string& _sTitle, gx::uInt _uWidth, gx::uInt _uHeight)
 
     glfwSetWindowUserPointer(m_pWindow, &m_Handler);
     glfwSetKeyCallback(m_pWindow, GLFW_KeyEvent);
+    glfwSetMouseButtonCallback(m_pWindow, GLFW_MouseButtonEvent);
+    glfwSetCursorPosCallback(m_pWindow, GLFW_MouseMotionEvent);
+    glfwSetScrollCallback(m_pWindow, GLFW_MouseScrollEvent);
+    glfwSetFramebufferSizeCallback(m_pWindow, GLFW_WindowResizedEvent);
 
     m_pContext->CreateContext();
 }
