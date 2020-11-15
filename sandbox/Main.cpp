@@ -14,10 +14,34 @@
 
 _GX_USE
 
-Orthographic Projection = Orthographic({ 800, 600 }, 10.0f);
+float Scale = 10.0f;
+
+Timestep timestep;
+Orthographic Projection = Orthographic({ 800, 600 }, Scale);
+
+static bool OnWindowResized(WindowResizedEvent& _Event)
+{
+    RenderCmd::GetGraphicsAPI()->SetViewport({ _Event.GetWidth(), _Event.GetHeight() });
+    Projection.Resize({ _Event.GetWidth(), _Event.GetHeight() });
+
+    return true;
+}
+
+static bool OnMouseScrolled(MouseScrollEvent& _Event)
+{
+    printf("Scroll: %.5f\n", _Event.GetScroll());
+    Scale -= _Event.GetScroll();
+    Projection.SetScale(Scale);
+
+    return true;
+}
 
 static void OnEvent(Event& _Event)
 {
+    EventMessanger messanger(_Event);
+    messanger.Register<WindowResizedEvent>(OnWindowResized);
+    messanger.Register<MouseScrollEvent>(OnMouseScrolled);
+
     Input::OnEvent(_Event);
 }
 
@@ -35,19 +59,19 @@ int main()
 
         Reference<Texture2D> KazakhstaniFlag = Texture2D::Create("sandbox/resources/Image.png");
 
-        Transform Flag  = Transform({ 0.0f, 2.5f, 0.0f }, { 12.0f, 5.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
-        Transform Flag2 = Transform({ 0.0f, -2.5f, 0.0f }, { 12.0f, 5.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+        Transform Flag  = Transform({ 0.0f, 5.5f, 0.0f }, { 12.0f, 5.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+        Transform Flag2 = Transform({ 0.0f, -5.5f, 0.0f }, { 12.0f, 5.0f, 1.0f }, { 0.0f, 0.0f, 25.0f });
 
         InputDevice& Keyboard = *Input::GetDevice("Keyboard");
         InputDevice& Mouse = *Input::GetDevice("Mouse");
 
-        Timestep timestep;
         while (window->IsOpen())
         {
+            window->Update();
             timestep.Update(window->GetContext()->GetTime());
 
             {
-                float Speed = 1.0f * timestep.GetSeconds();
+                float Speed = 10.0f * timestep.GetSeconds();
 
                 if (Keyboard.GetInputPressed(GLFW_KEY_W))
                     Projection.Translate({ 0.0f, Speed, 0.0f });
@@ -64,9 +88,7 @@ int main()
                 Projection.Update();
             }
 
-            window->Update();
-
-            RenderCmd::GetGraphicsAPI()->SetClearColour({ 0.025f, 0.025f, 0.025f, 1.0f });
+            RenderCmd::GetGraphicsAPI()->SetClearColour({ 0.025f, 0.125f, 0.225f, 1.0f });
             RenderCmd::GetGraphicsAPI()->Clear();
             
             Renderer2D::BeginScene(Projection);
