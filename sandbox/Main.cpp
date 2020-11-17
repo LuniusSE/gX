@@ -1,4 +1,6 @@
 /** gX-Sandbox **/
+#include <app/Core.hpp>
+
 #include <rendering/Renderer2D.hpp>
 #include <rendering/RenderCmd.hpp>
 #include <rendering/Arrays.hpp>
@@ -14,98 +16,100 @@
 
 _GX_USE
 
-float Scale = 10.0f;
-
-Timestep timestep;
-Orthographic Projection = Orthographic({ 800, 600 }, Scale);
-
-static bool OnWindowResized(WindowResizedEvent& _Event)
+class SandboxApp : public gx::Core
 {
-    RenderCmd::GetGraphicsAPI()->SetViewport({ _Event.GetWidth(), _Event.GetHeight() });
-    Projection.Resize({ _Event.GetWidth(), _Event.GetHeight() });
+private:
+    Reference<Texture2D> m_FlagTexture;
 
-    return true;
-}
+    float m_ProjectionScale;
+    Orthographic m_Projection;
 
-static bool OnMouseScrolled(MouseScrollEvent& _Event)
-{
-    printf("Scroll: %.5f\n", _Event.GetScroll());
-    Scale -= _Event.GetScroll();
-    Projection.SetScale(Scale);
+    Transform m_Flag1;
+    Transform m_Flag2;
 
-    return true;
-}
+    InputDevice* Keyboard;
+    InputDevice* Mouse;
 
-static void OnEvent(Event& _Event)
-{
-    EventMessanger messanger(_Event);
-    messanger.Register<WindowResizedEvent>(OnWindowResized);
-    messanger.Register<MouseScrollEvent>(OnMouseScrolled);
+public:
+    SandboxApp()
+        : Core("gX-Sandbox"),
+        Keyboard(Input::GetDevice("Keyboard")),
+        Mouse(Input::GetDevice("Mouse")),
+        m_ProjectionScale(10.0f),
+        m_Projection(Orthographic({ 800, 600 }, m_ProjectionScale))
+    {
+        m_FlagTexture = Texture2D::Create("sandbox/resources/Image.png");
 
-    Input::OnEvent(_Event);
-}
+        m_Flag1  = Transform({ 0.0f, 5.5f, 0.0f }, { 12.0f, 5.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+        m_Flag2 = Transform({ 0.0f, -5.5f, 0.0f }, { 12.0f, 5.0f, 1.0f }, { 0.0f, 0.0f, 25.0f });
+    }
+
+    ~SandboxApp()
+    {
+    }
+
+    bool OnWindowResized(WindowResizedEvent& _Event)
+    {
+        RenderCmd::GetGraphicsAPI()->SetViewport({ _Event.GetWidth(), _Event.GetHeight() });
+        m_Projection.Resize({ _Event.GetWidth(), _Event.GetHeight() });
+
+        return true;
+    }
+
+    bool OnMouseScrolled(MouseScrollEvent& _Event)
+    {
+        m_ProjectionScale -= _Event.GetScroll();
+        m_Projection.SetScale(m_ProjectionScale);
+
+        return true;
+    }
+
+    virtual inline void OnEvent(Event& _Event) override
+    {
+        EventMessanger messanger(_Event);
+
+        messanger.Register<WindowResizedEvent>(GX_EVENT(OnWindowResized));
+        messanger.Register<MouseScrollEvent>(GX_EVENT(OnMouseScrolled));
+    }
+
+    virtual inline void OnUpdate(Timestep& _ts) override
+    {
+        float Speed = 10.0f * _ts.GetSeconds();
+
+        if (Keyboard->GetInputPressed(GLFW_KEY_W))
+            m_Projection.Translate({ 0.0f, Speed, 0.0f });
+
+        if (Keyboard->GetInputPressed(GLFW_KEY_A))
+            m_Projection.Translate({ -Speed, 0.0f, 0.0f });
+
+        if (Keyboard->GetInputPressed(GLFW_KEY_S))
+            m_Projection.Translate({ 0.0f, -Speed, 0.0f });
+
+        if (Keyboard->GetInputPressed(GLFW_KEY_D))
+            m_Projection.Translate({ Speed, 0.0f, 0.0f });
+
+        m_Projection.Update();
+
+        RenderCmd::GetGraphicsAPI()->SetClearColour({ 0.025f, 0.125f, 0.225f, 1.0f });
+        RenderCmd::GetGraphicsAPI()->Clear();
+
+        Renderer2D::BeginScene(m_Projection);
+
+        Renderer2D::RenderQuad(m_Flag1, { 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, m_FlagTexture);
+        Renderer2D::RenderQuad(m_Flag2, { 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, m_FlagTexture);
+
+        Renderer2D::EndScene();
+    }
+
+};
 
 int main()
 {
-    RenderCmd::SetAPI(API::OpenGL);
-    Input::Initialize();
-    
-    Scope<Platform::Window> window = Platform::Window::Create("gX-Sandbox", 800, 600);
-    window->SetEventHandler(OnEvent);
+    Core* gXCore = new SandboxApp;
 
-    {
-        RenderCmd::Initialize();
-        Renderer2D::Initialize();
+    while (gXCore->IsApplicationRunning())
+        gXCore->OnCoreUpdate();
 
-        Reference<Texture2D> KazakhstaniFlag = Texture2D::Create("sandbox/resources/Image.png");
-
-        Transform Flag  = Transform({ 0.0f, 5.5f, 0.0f }, { 12.0f, 5.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
-        Transform Flag2 = Transform({ 0.0f, -5.5f, 0.0f }, { 12.0f, 5.0f, 1.0f }, { 0.0f, 0.0f, 25.0f });
-
-        InputDevice& Keyboard = *Input::GetDevice("Keyboard");
-        InputDevice& Mouse = *Input::GetDevice("Mouse");
-
-        while (window->IsOpen())
-        {
-            window->Update();
-            timestep.Update(window->GetContext()->GetTime());
-
-            {
-                float Speed = 10.0f * timestep.GetSeconds();
-
-                if (Keyboard.GetInputPressed(GLFW_KEY_W))
-                    Projection.Translate({ 0.0f, Speed, 0.0f });
-                
-                if (Keyboard.GetInputPressed(GLFW_KEY_A))
-                    Projection.Translate({ -Speed, 0.0f, 0.0f });
-
-                if (Keyboard.GetInputPressed(GLFW_KEY_S))
-                    Projection.Translate({ 0.0f, -Speed, 0.0f });
-
-                if (Keyboard.GetInputPressed(GLFW_KEY_D))
-                    Projection.Translate({ Speed, 0.0f, 0.0f });
-
-                Projection.Update();
-            }
-
-            RenderCmd::GetGraphicsAPI()->SetClearColour({ 0.025f, 0.125f, 0.225f, 1.0f });
-            RenderCmd::GetGraphicsAPI()->Clear();
-            
-            Renderer2D::BeginScene(Projection);
-
-            Renderer2D::RenderQuad(Flag, { 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, KazakhstaniFlag);
-            Renderer2D::RenderQuad(Flag2, { 1.0f, 1.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, KazakhstaniFlag);
-
-            Renderer2D::EndScene();
-
-            window->GetContext()->SwapBuffers();
-        }
-
-        Renderer2D::Shutdown();
-        RenderCmd::Shutdown();
-    }
-
-    Input::Shutdown();
-
+    delete gXCore;
     return 0;
 }
