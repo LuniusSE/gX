@@ -6,7 +6,9 @@
 #define _GX_IO_KEY_EVENTS_
 
 /** Includes **/
-#include <Common.hpp>
+#include <common/Namespace.hpp>
+#include <common/Types.hpp>
+
 #include <io/Events.hpp>
 
 _GX_BEGIN

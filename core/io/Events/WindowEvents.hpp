@@ -6,7 +6,9 @@
 #define _GX_IO_WINDOW_EVENTS_
 
 /** Includes **/
-#include <Common.hpp>
+#include <common/Namespace.hpp>
+#include <common/Types.hpp>
+
 #include <io/Events.hpp>
 
 _GX_BEGIN
@@ -72,10 +74,10 @@ public:
 /**
  * 
  **/
-class WindowClosed: public Event
+class WindowClosedEvent : public Event
 {
 public:
-    inline WindowClosed() {}
+    inline WindowClosedEvent() {}
 
     inline virtual uInt GetEventClass() const override
     { return Events::Window; }

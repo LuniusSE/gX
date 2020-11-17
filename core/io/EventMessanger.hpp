@@ -6,7 +6,9 @@
 #define _GX_IO_EVENT_MESSANGER_
 
 /** Includes **/
-#include <Common.hpp>
+#include <common/Namespace.hpp>
+#include <common/Types.hpp>
+
 #include "Events.hpp"
 #include <functional>
 

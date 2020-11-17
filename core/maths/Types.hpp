@@ -9,7 +9,8 @@
 #define DefaultPrecision glm::lowp
 
 /** Headers **/
-#include <Common.hpp>
+#include <common/Types.hpp>
+
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>

@@ -2,11 +2,12 @@
 // Events
 */
 
-#ifndef _GX_IO_EVENTS_
-#define _GX_IO_EVENTS_
+#ifndef _GX_IO_EVENT_TYPE_
+#define _GX_IO_EVENT_TYPE_
 
 /** Includes **/
-#include <Common.hpp>
+#include <common/Namespace.hpp>
+#include <common/Types.hpp>
 
 _GX_BEGIN
 
