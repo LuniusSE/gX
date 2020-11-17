@@ -1,8 +1,8 @@
 /*
-// OpenGL Textures API
+// OpenGL Textures2D API
 */ 
 
-#include "rendering/OpenGL/GLTextures.hpp"
+#include "rendering/OpenGL/GLTextures2D.hpp"
 #include "glad/glad.h"
 #include "stb/stb_image.h"
 

@@ -1,9 +1,9 @@
 /*
-// OpenGL Textures API
+// OpenGL Textures2D API
 */
 
-#ifndef _GX_OPENGL_TEXTURES_
-#define _GX_OPENGL_TEXTURES_
+#ifndef _GX_OPENGL_TEXTURES_2D_
+#define _GX_OPENGL_TEXTURES_2D_
 
 #include "rendering/Textures.hpp"
 
