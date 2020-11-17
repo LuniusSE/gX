@@ -48,6 +48,12 @@ void SendScrollEvent(gx::EventHandlerFn& _fnHandler, float _nX, float _nY)
     _fnHandler(e);
 }
 
+void SendWindowCloseEvent(gx::EventHandlerFn& _fnHandler)
+{
+    gx::WindowClosedEvent e;
+    _fnHandler(e);
+}
+
 void SendResizedEvent(gx::EventHandlerFn& _fnHandler, int _nWidth, int _nHeight)
 {
     gx::WindowResizedEvent e(_nWidth, _nHeight);
@@ -119,6 +125,13 @@ void GLFW_MouseScrollEvent(GLFWwindow* _pWindow, double _nX, double _nY)
     gx::EventHandlerFn& eHandler = *static_cast<gx::EventHandlerFn*>(glfwGetWindowUserPointer(_pWindow));
 
     SendScrollEvent(eHandler, _nX, _nY);
+}
+
+void GLFW_WindowCloseEvent(GLFWwindow* _pWindow)
+{
+    gx::EventHandlerFn& eHandler = *static_cast<gx::EventHandlerFn*>(glfwGetWindowUserPointer(_pWindow));
+
+    SendWindowCloseEvent(eHandler);
 }
 
 void GLFW_WindowResizedEvent(GLFWwindow* _pWindow, int _nWidth, int _nHeight)

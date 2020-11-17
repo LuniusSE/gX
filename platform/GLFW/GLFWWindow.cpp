@@ -24,6 +24,7 @@ Window::Window(const std::string& _sTitle, gx::uInt _uWidth, gx::uInt _uHeight)
     glfwSetCursorPosCallback(m_pWindow, GLFW_MouseMotionEvent);
     glfwSetScrollCallback(m_pWindow, GLFW_MouseScrollEvent);
     glfwSetFramebufferSizeCallback(m_pWindow, GLFW_WindowResizedEvent);
+    glfwSetWindowCloseCallback(m_pWindow, GLFW_WindowCloseEvent);
 
     m_pContext->CreateContext();
 }
