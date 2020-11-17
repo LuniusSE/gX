@@ -5,6 +5,8 @@
 #ifndef _GX_COMMON_NAMESPACE_
 #define _GX_COMMON_NAMESPACE_
 
+#define _GX_NS                  gx
+
 #ifndef _GX_NO_NAMESPACE_
 #   define _GX_BEGIN            namespace _GX_NS {
 #   define _GX_END              }
