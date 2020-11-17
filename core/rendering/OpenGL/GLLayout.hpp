@@ -1,14 +1,13 @@
 /*
-// OpenGL Layout
+// OpenGL Layout API
 */
 
-#ifndef _GX_RENDERING_GLLAYOUT_
-#define _GX_RENDERING_GLLAYOUT_
+#ifndef _GX_OPENGL_LAYOUT_
+#define _GX_OPENGL_LAYOUT_
 
-/** Headers **/
-#include <Common.hpp>
-#include <rendering/Layout.hpp>
-#include <glad/glad.h>
+#include "core/Common.hpp"
+#include "rendering/Layout.hpp"
+#include "glad/glad.h"
 
 _GX_REGION_BEGIN(OpenGL)
 

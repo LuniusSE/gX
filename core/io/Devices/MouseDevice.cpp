@@ -1,7 +1,8 @@
 /*
 // Mouse InputDevice
 */
-#include "MouseDevice.hpp"
+
+#include "io/Devices/MouseDevice.hpp"
 
 _GX_BEGIN
 

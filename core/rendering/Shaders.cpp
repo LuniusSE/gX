@@ -1,25 +1,18 @@
 /*
-// Graphics Shaders
+// gX Shaders API
 */
-#include "Shaders.hpp"
 
-/** Headers **/
-#include "OpenGL/GLShaders.hpp"
+#include "rendering/Shaders.hpp"
+#include "rendering/OpenGL/GLShaders.hpp"
 
 _GX_BEGIN
 
-/**
- * Shader::Create Implementation
-**/
 Reference<Shader> Shader::Create(const std::string& _sVertexSource, const std::string& _sFragmentSource)
 {
     /** TODO: Support GraphicsApi **/
     return CreateRef<OpenGL::Shader>(_sVertexSource, _sFragmentSource);
 }
 
-/**
- * Shader::CreateFromFile Implementation
-**/
 Reference<Shader> Shader::Create(const char* _sPath)
 {
     /** TODO: Support GraphicsApi **/

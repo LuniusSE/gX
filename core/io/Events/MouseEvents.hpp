@@ -1,23 +1,17 @@
 /*
-// Events
+// Mouse Events
 */
 
-#ifndef _GX_IO_MOUSE_EVENTS_
-#define _GX_IO_MOUSE_EVENTS_
+#ifndef _GX_MOUSE_EVENTS_
+#define _GX_MOUSE_EVENTS_
 
-/** Includes **/
-#include <common/Namespace.hpp>
-#include <common/Types.hpp>
-
-#include <io/Events.hpp>
+#include "core/Namespace.hpp"
+#include "core/Types.hpp"
+#include "io/Events.hpp"
 
 _GX_BEGIN
 
-/**
- * 
- **/
-class MouseButtonEvent : public Event
-{
+class MouseButtonEvent : public Event {
 protected:
     uInt m_Button;
     
@@ -42,11 +36,7 @@ public:
 
 };
 
-/**
- * 
- **/
-class MouseButtonPressedEvent : public MouseButtonEvent
-{
+class MouseButtonPressedEvent : public MouseButtonEvent {
 public:
     inline MouseButtonPressedEvent(const uInt& _Button, const uInt& _X, const uInt& _Y)
     : MouseButtonEvent(_Button, _X, _Y) {}
@@ -59,11 +49,7 @@ public:
 
 };
 
-/**
- * 
- **/
-class MouseButtonReleasedEvent : public MouseButtonEvent
-{
+class MouseButtonReleasedEvent : public MouseButtonEvent {
 public:
     inline MouseButtonReleasedEvent(const uInt& _Button, const uInt& _X, const uInt& _Y)
     : MouseButtonEvent(_Button, _X, _Y) {}
@@ -76,11 +62,7 @@ public:
 
 };
 
-/**
- * 
- **/
-class MouseMotionEvent : public Event
-{
+class MouseMotionEvent : public Event {
 protected:    
     uInt m_X;
     uInt m_Y;
@@ -106,11 +88,7 @@ public:
 
 };
 
-/**
- * 
- **/
-class MouseScrollEvent : public Event
-{
+class MouseScrollEvent : public Event {
 protected:    
     float m_Scroll;
 

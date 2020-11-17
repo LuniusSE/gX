@@ -1,23 +1,17 @@
 /*
-// Events
+// Window Events
 */
 
-#ifndef _GX_IO_WINDOW_EVENTS_
-#define _GX_IO_WINDOW_EVENTS_
+#ifndef _GX_WINDOW_EVENTS_
+#define _GX_WINDOW_EVENTS_
 
-/** Includes **/
-#include <common/Namespace.hpp>
-#include <common/Types.hpp>
-
-#include <io/Events.hpp>
+#include "core/Namespace.hpp"
+#include "core/Types.hpp"
+#include "io/Events.hpp"
 
 _GX_BEGIN
 
-/**
- * 
- **/
-class WindowResizedEvent : public Event
-{
+class WindowResizedEvent : public Event {
 protected:
     uInt m_Width, m_Height;
 
@@ -42,11 +36,7 @@ public:
 
 };
 
-/**
- * 
- **/
-class WindowMovedEvent : public Event
-{
+class WindowMovedEvent : public Event {
 protected:
     uInt m_X, m_Y;
 
@@ -71,11 +61,7 @@ public:
 
 };
 
-/**
- * 
- **/
-class WindowClosedEvent : public Event
-{
+class WindowClosedEvent : public Event {
 public:
     inline WindowClosedEvent() {}
 

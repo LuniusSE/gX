@@ -1,26 +1,22 @@
 /*
-// 2D Renderer
+// gX 2D Renderer API
 */
 
-#ifndef _GX_RENDERING_RENDERER2D_
-#define _GX_RENDERING_RENDERER2D_
+#ifndef _GX_RENDERER2D_
+#define _GX_RENDERER2D_
 
-/** Headers **/
-#include <Common.hpp>
-#include "Textures.hpp"
-#include <maths/Orthographic.hpp>
-
+#include "core/Common.hpp"
+#include "rendering/Textures.hpp"
+#include "maths/Orthographic.hpp"
 
 _GX_BEGIN
 
-class Renderer2D
-{
+class Renderer2D {
 private:
     static void StartBatch();
     static void NextBatch();
 
 public:
-
     /*! @brief Initialize Renderer2D data
     **/
     static void Initialize();

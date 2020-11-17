@@ -2,19 +2,14 @@
 // Transform
 */
 
-#ifndef _GX_MATHS_TRANSFORM_
-#define _GX_MATHS_TRANSFORM_
+#ifndef _GX_TRANSFORM_
+#define _GX_TRANSFORM_
 
-/** Include **/
-#include "Types.hpp"
+#include "maths/Types.hpp"
 
 _GX_BEGIN
 
-/**
- * 
- **/
-class Transform
-{
+class Transform {
 private:
     bool m_RecalculationRequired;
 

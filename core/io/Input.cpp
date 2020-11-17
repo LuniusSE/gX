@@ -1,13 +1,12 @@
 /*
 // Input
 */
-#include "Input.hpp"
+
+#include "io/Input.hpp"
+#include "io/Devices/KeyboardDevice.hpp"
+#include "io/Devices/MouseDevice.hpp"
 
 #include <stdio.h>
-
-/** Default Devices **/
-#include "Devices/KeyboardDevice.hpp"
-#include "Devices/MouseDevice.hpp"
 
 _GX_BEGIN
 

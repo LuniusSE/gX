@@ -1,9 +1,10 @@
 /*
 // GLFW Window
 */
-#include "GLFWWindow.hpp"
-#include "GLFWContext.hpp"
-#include "GLFWEvents.hpp"
+
+#include "GLFW/GLFWWindow.hpp"
+#include "GLFW/GLFWContext.hpp"
+#include "GLFW/GLFWEvents.hpp"
 
 _GX_REGION_BEGIN(GLFW)
 

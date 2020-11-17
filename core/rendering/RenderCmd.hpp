@@ -1,23 +1,20 @@
 /*
-// Graphics Rendering
+// gX RenderCommand API
 */
 
-#ifndef _GX_RENDERING_RENDERCMD_
-#define _GX_RENDERING_RENDERCMD_
+#ifndef _GX_RENDERCMD_
+#define _GX_RENDERCMD_
 
-/** Headers **/
-#include <Common.hpp>
-#include "GraphicsAPI.hpp"
+#include "core/Common.hpp"
+#include "rendering/GraphicsAPI.hpp"
 
 _GX_BEGIN
 
-class RenderCmd
-{
+class RenderCmd {
 private:
     static Scope<GraphicsAPI> s_GraphicsAPI;
 
 public:
-
     /*! @brief Create a new GraphicsAPI global instance
      * Can be either a OpenGL or Vulkan instance
     **/

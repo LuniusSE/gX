@@ -2,22 +2,17 @@
 // Mouse InputDevice
 */
 
-#ifndef _GX_IO_INPUT_DEVICE_MOUSE_
-#define _GX_IO_INPUT_DEVICE_MOUSE_
+#ifndef _GX_DEVICE_MOUSE_
+#define _GX_DEVICE_MOUSE_
 
-/** Includes **/
-#include <io/Input.hpp>
+#include "io/Input.hpp"
 
-/** Temp **/
+/** TODO: Remove **/
 #include <glfw/glfw3.h>
 
 _GX_BEGIN
 
-/**
- * 
- **/
-class MouseInputDevice : public InputDevice
-{
+class MouseInputDevice : public InputDevice {
 private:
     State m_ButtonStates[GLFW_MOUSE_BUTTON_LAST];
     float m_MouseX, m_MouseY;

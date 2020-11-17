@@ -1,13 +1,12 @@
 /*
-// Graphics Shaders
+// gX Shaders API
 */
 
-#ifndef _GX_RENDERING_SHADERS_
-#define _GX_RENDERING_SHADERS_
+#ifndef _GX_SHADERS_
+#define _GX_SHADERS_
 
-/** Headers **/
-#include <Common.hpp>
-#include <maths/Types.hpp>
+#include "core/Common.hpp"
+#include "maths/Types.hpp"
 
 _GX_BEGIN
 
@@ -15,13 +14,11 @@ _GX_BEGIN
  * TODO:
  *  Vulkan
  **/
-class Shader
-{
+class Shader {
 public:
     virtual ~Shader() = default;
 
     virtual void Bind() const = 0;
-    static void Reset();
 
     virtual void SetUniformInt(const char* _sUniform, int _nData) = 0;
     virtual void SetUniformIntArray(const char* _sUniform, Count _uCount, const int* _pData) = 0;

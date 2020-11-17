@@ -1,9 +1,10 @@
 /*
-// OpenGL Arrays
+// OpenGL Arrays API
 */
-#include "GLArrays.hpp"
-#include "GLLayout.hpp"
-#include <glad/glad.h>
+
+#include "rendering/OpenGL/GLArrays.hpp"
+#include "rendering/OpenGL/GLLayout.hpp"
+#include "glad/glad.h"
 
 _GX_REGION_BEGIN(OpenGL)
 

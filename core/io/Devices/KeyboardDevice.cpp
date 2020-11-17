@@ -1,7 +1,8 @@
 /*
 // Keyboard InputDevice
 */
-#include "KeyboardDevice.hpp"
+
+#include "io/Devices/KeyboardDevice.hpp"
 
 _GX_BEGIN
 

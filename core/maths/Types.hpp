@@ -5,15 +5,15 @@
 #ifndef _GX_MATHS_
 #define _GX_MATHS_
 
+/** Headers **/
+#include "core/Types.hpp"
+
+#include "glm/glm.hpp"
+#include "glm/gtx/transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
+
 /** GLM Precision **/
 #define DefaultPrecision glm::lowp
-
-/** Headers **/
-#include <common/Types.hpp>
-
-#include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 _GX_BEGIN
 

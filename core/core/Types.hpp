@@ -5,9 +5,9 @@
 #ifndef _GX_COMMON_TYPES_
 #define _GX_COMMON_TYPES_
 
-/** Headers **/
+#include "core/Namespace.hpp"
+
 #include <inttypes.h>
-#include "Namespace.hpp"
 
 _GX_BEGIN
 

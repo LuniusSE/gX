@@ -1,8 +1,9 @@
 /*
-// OpenGL Shaders
+// OpenGL Shaders API
 */ 
-#include "GLShaders.hpp"
-#include <glad/glad.h>
+
+#include "rendering/OpenGL/GLShaders.hpp"
+#include "glad/glad.h"
 
 _GX_REGION_BEGIN(OpenGL)
 

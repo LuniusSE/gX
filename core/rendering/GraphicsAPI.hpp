@@ -1,19 +1,17 @@
 /*
-// Graphics API
+// gX Graphics API
 */
 
-#ifndef _GX_RENDERING_API_
-#define _GX_RENDERING_API_
+#ifndef _GX_GRAPHICS_API_
+#define _GX_GRAPHICS_API_
 
-/** Headers **/
-#include <Common.hpp>
-#include "Arrays.hpp"
+#include "core/Common.hpp"
+#include "rendering/Arrays.hpp"
 
 _GX_BEGIN
 
 /** Graphics API **/
-enum class API
-{
+enum class API {
     None = 0,
 
     OpenGL,
@@ -24,8 +22,7 @@ enum class API
  * TODO:
  *  Vulkan
  **/
-class GraphicsAPI
-{
+class GraphicsAPI {
 public:
     static API s_API;
 
@@ -47,6 +44,7 @@ public:
     /*! @brief Create a new GraphicsAPI instance
     **/
     static Scope<GraphicsAPI> Create();
+    
 };
 
 _GX_END

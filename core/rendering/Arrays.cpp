@@ -1,16 +1,12 @@
 /*
-// Graphics Arrays
+// gX Graphics Buffers API
 */
-#include "Arrays.hpp"
 
-/** Headers **/
-#include "OpenGL/GLArrays.hpp"
+#include "rendering/Arrays.hpp"
+#include "rendering/OpenGL/GLArrays.hpp"
 
 _GX_BEGIN
 
-/**
- * VertexArray::Create Implementation
-**/
 Reference<VertexArray> VertexArray::Create()
 {
     /** TODO: Support GraphicsApi **/

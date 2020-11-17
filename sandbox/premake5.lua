@@ -23,7 +23,7 @@ project "gX-Sandbox"
         "%{wks.location}/thirdparty",
         "%{wks.location}/platform",
         "%{wks.location}/core",
-        "%{wks.location}/core/common"
+        "%{wks.location}/core/core"
     }
 
     links {

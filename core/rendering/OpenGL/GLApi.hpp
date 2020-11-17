@@ -2,17 +2,15 @@
 // OpenGL GraphicsAPI
 */
 
-#ifndef _GX_RENDERING_GLAPI_
-#define _GX_RENDERING_GLAPI_
+#ifndef _GX_OPENGL_API_
+#define _GX_OPENGL_API_
 
-/** Headers **/
-#include <Common.hpp>
-#include <rendering/GraphicsAPI.hpp>
+#include "core/Common.hpp"
+#include "rendering/GraphicsAPI.hpp"
 
 _GX_REGION_BEGIN(OpenGL)
 
-class GraphicsAPI : public gx::GraphicsAPI
-{
+class GraphicsAPI : public gx::GraphicsAPI {
 public:
     GraphicsAPI();
     ~GraphicsAPI();

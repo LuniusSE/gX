@@ -5,8 +5,7 @@
 #ifndef _GX_PLATFORM_CONTEXT_
 #define _GX_PLATFORM_CONTEXT_
 
-/** Headers **/
-#include <Common.hpp>
+#include "core/Common.hpp"
 
 _GX_BEGIN 
 _GX_REGION_BEGIN(Platform)
@@ -18,8 +17,7 @@ _GX_REGION_BEGIN(Platform)
  *  Wayland
  * TODO: Inherit from gx::PlatformContext
  **/
-class Context
-{
+class Context {
 public:
     virtual ~Context() = default;
 

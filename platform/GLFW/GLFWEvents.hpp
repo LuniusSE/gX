@@ -2,11 +2,10 @@
 // GLFW Context
 */
 
-#ifndef _GX_PLATFORM_GLFWEVENTS_
-#define _GX_PLATFORM_GLFWEVENTS_
+#ifndef _GX_GLFW_EVENTS_
+#define _GX_GLFW_EVENTS_
 
-/** Headers **/
-#include <Common.hpp>
+#include "core/Common.hpp"
 #include <glfw/glfw3.h>
 
 _GX_REGION_BEGIN(GLFW)

@@ -1,8 +1,9 @@
 /*
-// OpenGL Buffers
-*/ 
-#include "GLBuffers.hpp"
-#include <glad/glad.h>
+// OpenGL Buffers API
+*/  
+
+#include "rendering/OpenGL/GLBuffers.hpp"
+#include "glad/glad.h"
 
 _GX_REGION_BEGIN(OpenGL)
 
@@ -45,10 +46,8 @@ gx::Layout& VertexBuffer::GetLayout(void)
 void VertexBuffer::SetBufferData(const void* _pData, gx::Size _uSize)
 {
     glBindBuffer(GL_ARRAY_BUFFER, m_Program);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, _uSize, _pData);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, _uSize, _pData);
 }
-
-/** End VertexBuffer **/
 
 /** Begin ElementBuffer **/
 
@@ -68,7 +67,5 @@ void ElementBuffer::Bind() const
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Program);
 }
-
-/** End ElementBuffer **/
 
 _GX_REGION_END

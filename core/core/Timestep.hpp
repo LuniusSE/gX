@@ -2,22 +2,21 @@
 // Common Timestep
 */
 
-#ifndef _GX_COMMON_TIMESTEP_
-#define _GX_COMMON_TIMESTEP_
+#ifndef _GX_TIMESTEP_
+#define _GX_TIMESTEP_
 
-/** Headers **/
-#include "Namespace.hpp"
+#include "core/Namespace.hpp"
 
 _GX_BEGIN
 
-class Timestep
-{
+class Timestep {
 private:
     float m_LastTime;
     float m_DeltaTime;
 
 public:
-    inline Timestep() : m_DeltaTime(0.0f), m_LastTime(0.0f) {}
+    inline Timestep()
+    : m_DeltaTime(0.0f), m_LastTime(0.0f) {}
 
     inline void Update(float _ThisTime)
     { 

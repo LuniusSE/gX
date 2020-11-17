@@ -1,18 +1,17 @@
 /*
-// OpenGL Shaders
+// OpenGL Shaders API
 */
 
-#ifndef _GX_RENDERING_GLSHADERS_
-#define _GX_RENDERING_GLSHADERS_
+#ifndef _GX_OPENGL_SHADERS_
+#define _GX_OPENGL_SHADERS_
 
-/** Headers **/
-#include <rendering/Shaders.hpp>
+#include "rendering/Shaders.hpp"
+
 #include <string>
 
 _GX_REGION_BEGIN(OpenGL)
 
-class Shader : public gx::Shader
-{
+class Shader : public gx::Shader {
 private:
     gx::Program m_Program;
     std::string m_Vertex, m_Fragment;

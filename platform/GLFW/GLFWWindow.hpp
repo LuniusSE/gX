@@ -2,20 +2,18 @@
 // GLFW Window
 */
 
-#ifndef _GX_PLATFORM_GLFWWINDOW_
-#define _GX_PLATFORM_GLFWWINDOW_
+#ifndef _GX_GLFW_WINDOW_
+#define _GX_GLFW_WINDOW_
 
-/** Headers **/
-#include <Common.hpp>
-#include <platform/Window.hpp>
+#include "core/Common.hpp"
+#include "platform/Window.hpp"
 
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
 _GX_REGION_BEGIN(GLFW)
 
-class Window : public gx::Platform::Window
-{
+class Window : public gx::Platform::Window {
 friend class Context;
 private:
     GLFWwindow* m_pWindow;

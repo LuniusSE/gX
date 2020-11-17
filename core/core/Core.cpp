@@ -1,11 +1,12 @@
 /*
-// Common App
+// Core App
 */
-#include "Core.hpp"
 
-#include <io/Input.hpp>
-#include <rendering/RenderCmd.hpp>
-#include <rendering/Renderer2D.hpp>
+#include "core/Core.hpp"
+
+#include "io/Input.hpp"
+#include "rendering/RenderCmd.hpp"
+#include "rendering/Renderer2D.hpp"
 
 _GX_BEGIN
 

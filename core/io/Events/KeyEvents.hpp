@@ -1,23 +1,17 @@
 /*
-// Events
+// Key Events
 */
 
-#ifndef _GX_IO_KEY_EVENTS_
-#define _GX_IO_KEY_EVENTS_
+#ifndef _GX_KEY_EVENTS_
+#define _GX_KEY_EVENTS_
 
-/** Includes **/
-#include <common/Namespace.hpp>
-#include <common/Types.hpp>
-
-#include <io/Events.hpp>
+#include "core/Namespace.hpp"
+#include "core/Types.hpp"
+#include "io/Events.hpp"
 
 _GX_BEGIN
 
-/**
- * 
- **/
-class KeyEvent : public Event
-{
+class KeyEvent : public Event {
 protected:
     uInt m_Key;
 
@@ -32,11 +26,7 @@ public:
 
 };
 
-/**
- * 
- **/
-class CharEvent : public Event
-{
+class CharEvent : public Event {
 private:
     char m_Character;
     
@@ -58,11 +48,7 @@ public:
 
 };
 
-/**
- * 
- **/
-class KeyPressedEvent : public KeyEvent
-{
+class KeyPressedEvent : public KeyEvent {
 private:
     uInt m_RepeatCount;
 
@@ -81,11 +67,7 @@ public:
 
 };
 
-/**
- * 
- **/
-class KeyReleasedEvent : public KeyEvent
-{
+class KeyReleasedEvent : public KeyEvent {
 public:
     inline KeyReleasedEvent(const uInt& _Key)
         : KeyEvent(_Key) {}

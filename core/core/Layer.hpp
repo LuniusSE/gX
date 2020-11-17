@@ -2,18 +2,18 @@
 // Core Layer
 */
 
-#ifndef _GX_CORE_LAYER_
-#define _GX_CORE_LAYER_
+#ifndef _GX_LAYER_
+#define _GX_LAYER_
 
-/** Headers **/
-#include "Timestep.hpp"
-#include <io/Events.hpp>
 #include <string>
+
+#include "core/Types.hpp"
+#include "core/Timestep.hpp"
+#include "io/Events.hpp"
 
 _GX_BEGIN
 
-class Layer
-{
+class Layer {
 protected:
     class LayerStack* m_ParentStack;
     Index m_StackPosition;

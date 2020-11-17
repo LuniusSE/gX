@@ -1,7 +1,9 @@
 /*
 // GLFW Events
 */
-#include "GLFWEvents.hpp"
+
+#include "GLFW/GLFWEvents.hpp"
+
 #include <functional>
 
 _GX_REGION_BEGIN(GLFW)

@@ -2,8 +2,8 @@
 // gX Namespace
 */
 
-#ifndef _GX_COMMON_NAMESPACE_
-#define _GX_COMMON_NAMESPACE_
+#ifndef _GX_NAMESPACE_
+#define _GX_NAMESPACE_
 
 #define _GX_NS                  gx
 

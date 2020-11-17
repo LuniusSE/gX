@@ -1,13 +1,13 @@
 /*
-// Graphics Buffers
+// gX Graphics Buffers API
 */
 
-#ifndef _GX_RENDERING_BUFFERS_
-#define _GX_RENDERING_BUFFERS_
+#ifndef _GX_BUFFERS_
+#define _GX_BUFFERS_
 
-/** Headers **/
-#include <Common.hpp>
-#include "Layout.hpp"
+#include "core/Common.hpp"
+#include "rendering/Layout.hpp"
+
 #include <vector>
 
 _GX_BEGIN
@@ -16,13 +16,11 @@ _GX_BEGIN
  * TODO:
  *  Vulkan
  **/
-class VertexBuffer
-{
+class VertexBuffer {
 public:
     virtual ~VertexBuffer() = default;
 
     virtual void Bind() const = 0;
-    static void Reset();
 
     virtual void SetLayout(const Layout& _aLayout) = 0;
     virtual Layout& GetLayout(void) = 0;
@@ -42,14 +40,14 @@ public:
      * 
     **/
     static Reference<VertexBuffer> Create(const void* _pVertices, Size _uSize);
+
 };
 
 /**
  * TODO:
  *  Vulkan
  **/
-class ElementBuffer
-{
+class ElementBuffer {
 public:
     virtual ~ElementBuffer() = default;
 
@@ -59,6 +57,7 @@ public:
     /*! @brief Create a new ElementBuffer Object
     **/
     static Reference<ElementBuffer> Create(const std::vector<Index>& _aElements);
+    
 };
 
 _GX_END

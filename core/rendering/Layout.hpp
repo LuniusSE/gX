@@ -1,12 +1,12 @@
 /*
-// Graphics Shader Layout
+// gX Shader Layout API
 */
 
-#ifndef _GX_RENDERING_LAYOUT_
-#define _GX_RENDERING_LAYOUT_
+#ifndef _GX_LAYOUT_
+#define _GX_LAYOUT_
 
-/** Headers **/
-#include <Common.hpp>
+#include "core/Common.hpp"
+
 #include <vector>
 
 _GX_BEGIN
@@ -14,8 +14,7 @@ _GX_BEGIN
 /*! @brief Layout of VertexBuffers for Shaders.
  * Implementation of Layouts vary between APIs (e.g. OpenGL, Vulkan)
  */
-typedef enum class LayoutAttributes
-{
+typedef enum class LayoutAttributes {
     Int,
 
     Float,

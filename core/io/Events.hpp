@@ -2,20 +2,18 @@
 // Events
 */
 
-#ifndef _GX_IO_EVENT_TYPE_
-#define _GX_IO_EVENT_TYPE_
+#ifndef _GX_EVENT_
+#define _GX_EVENT_
 
-/** Includes **/
-#include <common/Namespace.hpp>
-#include <common/Types.hpp>
+#include "core/Namespace.hpp"
+#include "core/Types.hpp"
 
 _GX_BEGIN
 
 /**
  * Event Classifications
  **/
-enum Events
-{
+enum Events {
     Key,
     Char,
     Mouse,
@@ -28,8 +26,7 @@ enum Events
 /**
  * Types of Events
  **/
-enum class EventTypes
-{
+enum class EventTypes {
     KeyPressed,
     KeyReleased,
     KeyRepeat,
@@ -45,11 +42,7 @@ enum class EventTypes
     WindowClosed
 };
 
-/**
- * 
- **/
-class Event
-{
+class Event {
 friend class EventMessanger;
 private:
     bool m_EventHandled;

@@ -14,7 +14,7 @@ project "gX-Platform"
         "%{wks.location}/thirdparty",
         "%{wks.location}/platform", 
         "%{wks.location}/core", 
-        "%{wks.location}/core/common" 
+        "%{wks.location}/core/core" 
     };
 
     files {

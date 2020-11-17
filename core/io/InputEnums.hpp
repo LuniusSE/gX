@@ -12,27 +12,17 @@ _GX_BEGIN
 
 /** Input Axises for default InputDevices **/
 
-/**
- * 
- **/
-enum MouseAxises
-{
+enum MouseAxises {
     Mouse_X,
     Mouse_Y
 };
 
-/**
- * 
- **/
-enum KeyboardAxises
-{
+enum KeyboardAxises {
 };
 
-/**
- * 
- **/
-typedef enum class Action
-{
+/** Actions and Codes **/
+
+typedef enum class Action {
     Released,
     Pressed,
 
@@ -40,18 +30,10 @@ typedef enum class Action
     Repeat
 }State;
 
-/**
- * 
- **/
-enum class Buttons
-{
+enum class Buttons {
 };
 
-/**
- * 
- **/
-enum class Keys
-{
+enum class Keys {
 };
 
 _GX_END

@@ -2,18 +2,16 @@
 // GLFW Context
 */
 
-#ifndef _GX_PLATFORM_GLFWCONTEXT_
-#define _GX_PLATFORM_GLFWCONTEXT_
+#ifndef _GX_GLFW_CONTEXT_
+#define _GX_GLFW_CONTEXT_
 
-/** Headers **/
-#include <Common.hpp>
-#include <platform/Context.hpp>
-#include "GLFWWindow.hpp"
+#include "core/Common.hpp"
+#include "platform/Context.hpp"
+#include "GLFW/GLFWWindow.hpp"
 
 _GX_REGION_BEGIN(GLFW)
 
-class Context : public gx::Platform::Context
-{
+class Context : public gx::Platform::Context {
 private:
     Window* m_Window;
     // GraphicsContext*

@@ -2,11 +2,10 @@
 // Files
 */
 
-#ifndef _GX_IO_FILES_
-#define _GX_IO_FILES_
+#ifndef _GX_FILES_
+#define _GX_FILES_
 
-/** Headers **/
-#include <Common.hpp>
+#include "core/Common.hpp"
 #include <string>
 #include <string_view>
 
@@ -15,8 +14,7 @@ _GX_BEGIN
 /**
  * File data
  **/
-struct File
-{
+struct File {
     std::string_view sPath;
     std::string sData;
     int nLines;
@@ -24,8 +22,7 @@ struct File
 };
 
 /** File Options **/
-enum class FileOptions
-{
+enum class FileOptions {
     None = 0,
 
     Read,

@@ -1,16 +1,16 @@
 /*
-// 2D Renderer
+// gX 2D Renderer API
 */
-#include "Renderer2D.hpp"
-#include "RenderCmd.hpp"
-#include "Arrays.hpp"
-#include "Buffers.hpp"
-#include "Shaders.hpp"
-#include "Textures.hpp"
+
+#include "rendering/Renderer2D.hpp"
+#include "rendering/RenderCmd.hpp"
+#include "rendering/Arrays.hpp"
+#include "rendering/Buffers.hpp"
+#include "rendering/Shaders.hpp"
+#include "rendering/Textures.hpp"
 
 #include <vector>
 #include <string>
-
 #include <iostream>
 #include <iterator>
 #include <unordered_map>
@@ -29,8 +29,7 @@ constexpr uInt ReservedTextures = 1u;
  * 	0u - Default White Texture
  **/
 
-struct Vertex
-{
+struct Vertex {
     Vec3 Position;
     Vec4 Tint;
     Vec2 TexCoord;
@@ -38,8 +37,7 @@ struct Vertex
     float TextureId;
 };
 
-struct Scene
-{
+struct Scene {
     uInt elementCount = 0u;
 
     Reference<VertexArray> vertexArray;
@@ -62,9 +60,6 @@ struct Scene
 
 static Scene s_Scene;
 
-/**
- * Renderer2D::Initialize Implementation
-**/
 void Renderer2D::Initialize()
 {
     s_Scene.pQuadVertexBuffer = nullptr;
@@ -137,9 +132,6 @@ void Renderer2D::Initialize()
     s_Scene.textureSlots[0] = s_Scene.defaultTexture;
 }
 
-/**
- * Renderer2D::Shutdown Implementation
-**/
 void Renderer2D::Shutdown()
 {
     free(s_Scene.pQuadVertexBuffer);
@@ -148,9 +140,6 @@ void Renderer2D::Shutdown()
     s_Scene.pQuadVertexBufferPtr = nullptr;
 }
 
-/**
- * Renderer2D::StatBatch Implementation
-**/
 void Renderer2D::StartBatch()
 {
     s_Scene.textureIndex = ReservedTextures;
@@ -159,18 +148,12 @@ void Renderer2D::StartBatch()
     s_Scene.pQuadVertexBufferPtr = s_Scene.pQuadVertexBuffer;
 }
 
-/**
- * Renderer2D::NextBatch Implementation
-**/
 void Renderer2D::NextBatch()
 {
     Flush();
     StartBatch();
 }
 
-/**
- * Renderer2D::BeginScene Implementation
-**/
 void Renderer2D::BeginScene(Orthographic& _Projection)
 {
     s_Scene.projection = &_Projection;
@@ -178,9 +161,6 @@ void Renderer2D::BeginScene(Orthographic& _Projection)
     StartBatch();
 }
 
-/**
- * Renderer2D::EndScene Implementation
-**/
 void Renderer2D::EndScene()
 {
     Size BufferUsageSize = ((uChar*)s_Scene.pQuadVertexBufferPtr - (uChar*)s_Scene.pQuadVertexBuffer);
@@ -189,9 +169,6 @@ void Renderer2D::EndScene()
     Flush();
 }
 
-/**
- * Renderer2D::Flush Implementation
-**/
 void Renderer2D::Flush()
 {
     if (s_Scene.elementCount == 0u)
@@ -209,9 +186,6 @@ void Renderer2D::Flush()
     RenderCmd::GetGraphicsAPI()->DrawIndexed(s_Scene.vertexArray, s_Scene.elementCount);
 }
 
-/**
- * Renderer2D::BuildQuad Implementation
-**/
 void Renderer2D::BuildQuad(const Mat4& Transform, const Vec2& _vTiling, const Vec4& _vColour, const Int& _nTextureIndex)
 {
     if(s_Scene.elementCount >= BatchedIndices)
@@ -248,9 +222,6 @@ void Renderer2D::BuildQuad(const Mat4& Transform, const Vec2& _vTiling, const Ve
     s_Scene.elementCount += 6u;
 }
 
-/**
- * Renderer2D::RenderQuad Implementation
-**/
 void Renderer2D::RenderQuad(const Mat4& _mTransform, const Vec2& _vTiling, const Vec4& _vColour, Reference<Texture2D>& _pTexture)
 {
     Int textureIndex = 0;

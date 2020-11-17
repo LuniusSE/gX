@@ -2,20 +2,15 @@
 // Virtual InputDevice
 */
 
-#ifndef _GX_IO_INPUT_DEVICE_
-#define _GX_IO_INPUT_DEVICE_
+#ifndef _GX_INPUT_DEVICE_
+#define _GX_INPUT_DEVICE_
 
-/** Includes **/
-#include <Common.hpp>
-#include "InputEnums.hpp"
+#include "core/Common.hpp"
+#include "io/InputEnums.hpp"
 
 _GX_BEGIN
 
-/**
- * 
- **/
-class InputDevice
-{
+class InputDevice {
 public:
     virtual ~InputDevice() = default;
 

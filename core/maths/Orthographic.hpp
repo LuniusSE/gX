@@ -2,11 +2,10 @@
 // Orthographic Projection
 */
 
-#ifndef _GX_MATHS_ORTHOGRAPHIC_
-#define _GX_MATHS_ORTHOGRAPHIC_
+#ifndef _GX_ORTHOGRAPHIC_
+#define _GX_ORTHOGRAPHIC_
 
-/** Include **/
-#include "Types.hpp"
+#include "maths/Types.hpp"
 
 _GX_BEGIN
 
@@ -14,8 +13,7 @@ _GX_BEGIN
  * Orthographic Projection
  * USAGE: Camera
  **/
-class Orthographic
-{
+class Orthographic {
 private:
     Mat4 m_View;
     Mat4 m_Projection;
@@ -63,17 +61,17 @@ public:
 
     /*! @brief Return the ViewProjection matrix
     **/
-	Mat4 GetViewProjection(void);
+    Mat4 GetViewProjection(void);
 
     /*! @brief Call "GetViewProjection()"
     **/
-	inline operator Mat4(void)
-	{ return GetViewProjection(); }
+    inline operator Mat4(void)
+    { return GetViewProjection(); }
 
     /*! @brief Call "GetViewProjection()"
     **/
-	inline operator glm::mat4(void)
-	{ return GetViewProjection(); }
+    inline operator glm::mat4(void)
+    { return GetViewProjection(); }
 
 };
 

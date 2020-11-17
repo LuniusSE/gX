@@ -2,24 +2,18 @@
 // Input
 */
 
-#ifndef _GX_IO_INPUT_
-#define _GX_IO_INPUT_
+#ifndef _GX_INPUT_
+#define _GX_INPUT_
 
-/** Includes **/
-#include <Common.hpp>
+#include "core/Common.hpp"
+#include "io/InputDevice.hpp"
 
 #include <string>
 #include <unordered_map>
 
-#include "InputDevice.hpp"
-
 _GX_BEGIN
 
-/**
- * 
- **/
-class Input
-{
+class Input {
 public:
     using DeviceMap = std::unordered_map<std::string, Scope<InputDevice>>;
 

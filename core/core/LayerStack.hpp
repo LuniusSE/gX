@@ -2,17 +2,16 @@
 // Core LayerStack
 */
 
-#ifndef _GX_CORE_LAYERSTACK_
-#define _GX_CORE_LAYERSTACK_
+#ifndef _GX_LAYERSTACK_
+#define _GX_LAYERSTACK_
 
-/** Headers **/
 #include "Layer.hpp"
+
 #include <vector>
 
 _GX_BEGIN
 
-class LayerStack
-{
+class LayerStack {
 private:
     std::vector<Layer*> m_Layers;
     Index m_LayerIndex;
@@ -28,25 +27,25 @@ public:
     void PopOverlay(Layer* _pOverlayLayer);
 
     /** Iterators **/
-	inline std::vector<Layer*>::iterator begin()
+    inline std::vector<Layer*>::iterator begin()
     { return m_Layers.begin(); }
-	inline std::vector<Layer*>::iterator end()
+    inline std::vector<Layer*>::iterator end()
     { return m_Layers.end(); }
 
-	inline std::vector<Layer*>::reverse_iterator rbegin()
+    inline std::vector<Layer*>::reverse_iterator rbegin()
     { return m_Layers.rbegin(); }
-	inline std::vector<Layer*>::reverse_iterator rend()
+    inline std::vector<Layer*>::reverse_iterator rend()
     { return m_Layers.rend(); }
 
     /** const Iterators **/
-	inline std::vector<Layer*>::const_iterator begin() const 
+    inline std::vector<Layer*>::const_iterator begin() const 
     { return m_Layers.begin(); }
-	inline std::vector<Layer*>::const_iterator end() const
+    inline std::vector<Layer*>::const_iterator end() const
     { return m_Layers.end(); }
 
-	inline std::vector<Layer*>::const_reverse_iterator rbegin() const
+    inline std::vector<Layer*>::const_reverse_iterator rbegin() const
     { return m_Layers.rbegin(); }
-	inline std::vector<Layer*>::const_reverse_iterator rend() const
+    inline std::vector<Layer*>::const_reverse_iterator rend() const
     { return m_Layers.rend(); }
 
 };

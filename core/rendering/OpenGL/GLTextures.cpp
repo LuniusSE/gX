@@ -1,11 +1,10 @@
 /*
-// OpenGL Textures
+// OpenGL Textures API
 */ 
-#include "GLTextures.hpp"
-#include <glad/glad.h>
 
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb/stb_image.h>
+#include "rendering/OpenGL/GLTextures.hpp"
+#include "glad/glad.h"
+#include "stb/stb_image.h"
 
 _GX_REGION_BEGIN(OpenGL)
 

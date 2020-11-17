@@ -5,16 +5,15 @@
 #ifndef _GX_CORE_
 #define _GX_CORE_
 
-/** Headers **/
-#include "Timestep.hpp"
-#include <io/Events.hpp>
-#include <platform/Window.hpp>
+#include "core/Timestep.hpp"
+#include "io/Events.hpp"
+#include "platform/Window.hpp"
+
 #include <string>
 
 _GX_BEGIN
 
-class Core
-{
+class Core {
 private:
     bool OnWindowClosedEvent(WindowClosedEvent& _Event);
 

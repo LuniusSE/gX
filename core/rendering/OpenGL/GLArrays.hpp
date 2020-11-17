@@ -1,19 +1,17 @@
 /*
-// OpenGL Arrays
+// OpenGL Arrays API
 */
 
-#ifndef _GX_RENDERING_GLARRAYS_
-#define _GX_RENDERING_GLARRAYS_
+#ifndef _GX_OPENGL_ARRAYS_
+#define _GX_OPENGL_ARRAYS_
 
-/** Headers **/
-#include <Common.hpp>
-#include <rendering/Arrays.hpp>
-#include <rendering/Buffers.hpp>
+#include "core/Common.hpp"
+#include "rendering/Arrays.hpp"
+#include "rendering/Buffers.hpp"
 
 _GX_REGION_BEGIN(OpenGL)
 
-class VertexArray : public gx::VertexArray
-{
+class VertexArray : public gx::VertexArray {
 private:
     gx::Program m_Program;
 

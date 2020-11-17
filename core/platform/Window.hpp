@@ -5,9 +5,9 @@
 #ifndef _GX_PLATFORM_WINDOW_
 #define _GX_PLATFORM_WINDOW_
 
-/** Headers **/
-#include <Common.hpp>
-#include "Context.hpp"
+#include "core/Common.hpp"
+#include "platform/Context.hpp"
+
 #include <string>
 
 _GX_BEGIN 
@@ -19,8 +19,7 @@ _GX_REGION_BEGIN(Platform)
  *  WinApi
  *  Wayland
  **/
-class Window
-{
+class Window {
 public:
     virtual ~Window() = default;
 

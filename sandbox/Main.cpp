@@ -1,5 +1,5 @@
 /** gX-Sandbox **/
-#include <app/Core.hpp>
+#include <core/Core.hpp>
 
 #include <rendering/Renderer2D.hpp>
 #include <rendering/RenderCmd.hpp>
@@ -16,8 +16,7 @@
 
 _GX_USE
 
-class SandboxApp : public gx::Core
-{
+class SandboxApp : public gx::Core {
 private:
     Reference<Texture2D> m_FlagTexture;
 

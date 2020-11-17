@@ -1,18 +1,17 @@
 /*
-// OpenGL Textures
+// OpenGL Textures API
 */
 
-#ifndef _GX_RENDERING_GLTEXTURES_
-#define _GX_RENDERING_GLTEXTURES_
+#ifndef _GX_OPENGL_TEXTURES_
+#define _GX_OPENGL_TEXTURES_
 
-/** Headers **/
-#include <rendering/Textures.hpp>
+#include "rendering/Textures.hpp"
+
 #include <string>
 
 _GX_REGION_BEGIN(OpenGL)
 
-class Texture2D : public gx::Texture2D
-{
+class Texture2D : public gx::Texture2D {
 private:
     gx::Program m_Program;
     std::string m_Path;
@@ -29,9 +28,9 @@ public:
 
     virtual void Bind(gx::Index _iPos = 0u) const override; 
 
-	virtual gx::Program GetProgram() const override;
-	virtual gx::uInt GetWidth() const override;
-	virtual gx::uInt GetHeight() const override;
+    virtual gx::Program GetProgram() const override;
+    virtual gx::uInt GetWidth() const override;
+    virtual gx::uInt GetHeight() const override;
 
 };
 

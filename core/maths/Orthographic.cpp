@@ -1,7 +1,8 @@
 /*
 // Orthographic Projection
 */
-#include "Orthographic.hpp"
+
+#include "maths/Orthographic.hpp"
 
 _GX_BEGIN
 
@@ -23,10 +24,10 @@ Orthographic::~Orthographic()
 
 void Orthographic::__ResetOrthographic(void)
 {
-	float Left      = -m_Scale * m_AspectRatio * 0.5f;
-	float Right     =  m_Scale * m_AspectRatio * 0.5f;
-	float Bottom    = -m_Scale * 0.5f;
-	float Top       =  m_Scale * 0.5f;
+    float Left      = -m_Scale * m_AspectRatio * 0.5f;
+    float Right     =  m_Scale * m_AspectRatio * 0.5f;
+    float Bottom    = -m_Scale * 0.5f;
+    float Top       =  m_Scale * 0.5f;
 
     float zNear     = 0.1f;
     float zFar      = 100.0f;

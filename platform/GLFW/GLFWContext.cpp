@@ -1,8 +1,9 @@
 /*
 // GLFW Context
 */
-#include "GLFWWindow.hpp"
-#include "GLFWContext.hpp"
+
+#include "GLFW/GLFWWindow.hpp"
+#include "GLFW/GLFWContext.hpp"
 
 _GX_REGION_BEGIN(GLFW)
 

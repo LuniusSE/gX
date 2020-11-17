@@ -2,22 +2,17 @@
 // Keyboard InputDevice
 */
 
-#ifndef _GX_IO_INPUT_DEVICE_KEYBOARD_
-#define _GX_IO_INPUT_DEVICE_KEYBOARD_
+#ifndef _GX_DEVICE_KEYBOARD_
+#define _GX_DEVICE_KEYBOARD_
 
-/** Includes **/
-#include <io/Input.hpp>
+#include "io/Input.hpp"
 
-/** Temp **/
+/** TODO: Remove **/
 #include <glfw/glfw3.h>
 
 _GX_BEGIN
 
-/**
- * 
- **/
-class KeyboardInputDevice : public InputDevice
-{
+class KeyboardInputDevice : public InputDevice {
 private:
     State m_KeyStates[GLFW_KEY_LAST];
 

@@ -1,17 +1,13 @@
 /*
 // gX-Core create Window Implementation
 */
-#include <platform/Window.hpp>
 
-/** Headers **/
+#include "platform/Window.hpp"
 #include "GLFW/GLFWWindow.hpp"
 
 _GX_BEGIN
 _GX_REGION_BEGIN(Platform)
 
-/**
- * Window::Create Implementation
-**/
 Scope<Window> Window::Create(const std::string& _sTitle, uInt _nWidth, uInt _nHeight)
 {
     /** TODO: Support WinAPI, X11, Wayland **/

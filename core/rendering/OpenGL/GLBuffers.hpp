@@ -1,18 +1,16 @@
 /*
-// OpenGL Buffers
+// OpenGL Buffers API
 */
 
-#ifndef _GX_RENDERING_GLBUFFERS_
-#define _GX_RENDERING_GLBUFFERS_
+#ifndef _GX_OPENGL_BUFFERS_
+#define _GX_OPENGL_BUFFERS_
 
-/** Headers **/
-#include <rendering/Buffers.hpp>
-#include <Types.hpp>
+#include "rendering/Buffers.hpp"
+#include "core/Types.hpp"
 
 _GX_REGION_BEGIN(OpenGL)
 
-class VertexBuffer : public gx::VertexBuffer
-{
+class VertexBuffer : public gx::VertexBuffer {
 private:
     gx::Program m_Program;
     gx::Layout m_Layout;
@@ -30,8 +28,7 @@ public:
 
 };
 
-class ElementBuffer : public gx::ElementBuffer
-{
+class ElementBuffer : public gx::ElementBuffer {
 private:
     gx::Program m_Program;
 

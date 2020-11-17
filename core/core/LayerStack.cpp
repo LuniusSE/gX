@@ -1,7 +1,10 @@
 /*
 // Core LayerStack
 */
+
 #include "LayerStack.hpp"
+
+#include <algorithm>
 
 _GX_BEGIN
 
