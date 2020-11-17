@@ -1,5 +1,8 @@
 # TODO List
 
+### core
+    - AssetManager
+
 ### debugging/
     - Assertion
     - Logging
