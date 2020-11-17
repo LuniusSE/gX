@@ -1,7 +1,7 @@
 /*
-// Platform Window
+// gX-Core create Window Implementation
 */
-#include "Window.hpp"
+#include <platform/Window.hpp>
 
 /** Headers **/
 #include "GLFW/GLFWWindow.hpp"
@@ -9,9 +9,8 @@
 _GX_BEGIN
 _GX_REGION_BEGIN(Platform)
 
-
 /**
- * VertexArray::Create Implementation
+ * Window::Create Implementation
 **/
 Scope<Window> Window::Create(const std::string& _sTitle, uInt _nWidth, uInt _nHeight)
 {
