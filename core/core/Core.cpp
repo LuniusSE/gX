@@ -57,6 +57,10 @@ void Core::OnCoreUpdate(void)
     m_Window->Update();
     
     OnUpdate(m_Timestep);
+
+    for (Layer* pLayer : m_Stack)
+        pLayer->OnUpdate(m_Timestep);
+
     m_Window->GetContext()->SwapBuffers();
 }
 
@@ -74,6 +78,15 @@ void Core::OnCoreEvent(Event& _Event)
     messanger.Register<WindowClosedEvent>(GX_EVENT(OnWindowClosedEvent));
 
     OnEvent(_Event);
+
+    for (auto it = m_Stack.rbegin(); it != m_Stack.rend(); ++it)
+    {
+        if (_Event.IsHandled()) 
+            break;
+        
+        (*it)->OnEvent(_Event);
+    }
+    
 }
 
 _GX_END

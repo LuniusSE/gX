@@ -5,6 +5,7 @@
 #ifndef _GX_CORE_
 #define _GX_CORE_
 
+#include "core/LayerStack.hpp"
 #include "core/Timestep.hpp"
 #include "io/Events.hpp"
 #include "platform/Window.hpp"
@@ -20,6 +21,7 @@ private:
 protected:
     std::string m_Title;
     Scope<Platform::Window> m_Window;
+    LayerStack m_Stack;
     Timestep m_Timestep;
     bool m_Running;
 
@@ -32,6 +34,9 @@ public:
 
     inline void CloseApplication()
     { m_Running = false; }
+
+    inline void PushLayer(Layer* _pLayer)
+    { m_Stack.Push(_pLayer); }
 
     void InitializePlatform(void);
     void ShutdownPlatform(void);

@@ -27,6 +27,7 @@ LayerStack::~LayerStack()
 void LayerStack::Push(Layer* _pLayer)
 {
     m_Layers.emplace(m_Layers.begin() + m_LayerIndex, _pLayer);
+    _pLayer->OnAttach();
 
     m_LayerIndex++;
 }
@@ -46,6 +47,7 @@ void LayerStack::Pop(Layer* _pLayer)
 void LayerStack::PushOverlay(Layer* _pOverlayLayer)
 {
     m_Layers.emplace_back(_pOverlayLayer);
+    _pOverlayLayer->OnAttach();
 }
 
 void LayerStack::PopOverlay(Layer* _pOverlayLayer)

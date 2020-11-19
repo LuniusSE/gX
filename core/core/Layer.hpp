@@ -15,14 +15,10 @@ _GX_BEGIN
 
 class Layer {
 protected:
-    class LayerStack* m_ParentStack;
-    Index m_StackPosition;
-
     std::string m_LayerName;
 
 public:
-    inline Layer(const std::string& _Name)
-        : m_LayerName(_Name), m_ParentStack(nullptr), m_StackPosition(0u) {}
+    inline Layer(const std::string& _Name) : m_LayerName(_Name) {}
     virtual ~Layer() = default;
 
     inline const char* GetName() const 
